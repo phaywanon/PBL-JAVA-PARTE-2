@@ -11,6 +11,8 @@ public class JogoController {
     private Scanner sc;
     private boolean primeiroDia = true;
     private int diaAtual = 1;
+    private boolean avisoHojeExibido = false;
+    private boolean foiParaSalaHoje = false;
 
     public void iniciarJogo() {
         sc = new Scanner(System.in);
@@ -25,6 +27,7 @@ public class JogoController {
     private void loopPrincipal() {
         int opcao;
         do {
+            exibirAvisoInicioDoDia();
             exibirMenu();
             opcao = sc.nextInt();
             executarAcao(opcao);
@@ -59,12 +62,13 @@ public class JogoController {
             case 3 -> jogador.lanchar(mapa);
             case 4 -> interagirNPC();
             case 5 -> {
-                jogador.irParaCasa(mapa);
-                avancarDia();
+                if (jogador.irParaCasa(mapa)) {
+                    avancarDia();
+                }
             }
             case 6 -> {
                 jogador.irParaUEFS(mapa);
-                if (primeiroDia){
+                if (primeiroDia) {
                     primeiroDia = false;
                 }
             }
@@ -98,12 +102,14 @@ public class JogoController {
 
         switch (escolha) {
             case 1 -> {
-                jogador.mudarLocal(mapa.getCantina());;
+                jogador.mudarLocal(mapa.getCantina());
+                ;
                 jogador.getLocal().eventoAoEntrar(jogador);
             }
             case 2 -> {
                 jogador.mudarLocal(mapa.getSalaDeAula());
                 jogador.getLocal().eventoAoEntrar(jogador);
+                jogador.setFoiParaSalaHoje(true);
             }
             case 3 -> {
                 jogador.mudarLocal(mapa.getLaboratorio());
@@ -169,31 +175,45 @@ public class JogoController {
     // ========== TEMPO ==========
 
     private void avancarDia() {
-        diaAtual++;
-        gerenciadorDeEventosAL.sortearEventoAleatorio(jogador);
+        exibirAvisoDeAmanha();
+
+        // verifica ANTES de incrementar
         verificarEventosObrigatorios();
-        exibirAvisoDeProva();
+
+        diaAtual++;
+        avisoHojeExibido = false;
+        gerenciadorDeEventosAL.sortearEventoAleatorio(jogador);
+        jogador.setFoiParaSalaHoje(false);
     }
 
     private void verificarEventosObrigatorios() {
-        int diaDoSemestre = diaAtual % 21;
+        int diaDoSemestre = (diaAtual - 1) % 21 + 1; // usa diaAtual atual, sem incremento
         switch (diaDoSemestre) {
             case 7  -> new EventoOBProva(1).aplicarEvento(jogador);
             case 14 -> new EventoOBProva(2).aplicarEvento(jogador);
             case 20 -> new EventoOBProva(3).aplicarEvento(jogador);
-            case 0  -> new EventoOBFimDeSemestre().aplicarEvento(jogador);
+            case 21 -> new EventoOBFimDeSemestre().aplicarEvento(jogador);
         }
     }
 
-    private void exibirAvisoDeProva() {
-        int diaDoSemestre = diaAtual % 21;
-        if (diaDoSemestre == 6 || diaDoSemestre == 13 || diaDoSemestre == 19) {
-            System.out.println("⚠️  AMANHÃ TEM PROVA! Vá para a Sala de Aula.");
-        } else if (diaDoSemestre == 7 || diaDoSemestre == 14 || diaDoSemestre == 20) {
-            System.out.println("📝 HOJE TEM PROVA!");
-            if (!(jogador.getLocal() instanceof LocalSalaDeAula)) {
-                System.out.println("⛔ Você não estava na Sala de Aula!");
+
+    private void exibirAvisoInicioDoDia() {
+        int diaDoSemestre = (diaAtual - 1) % 21 + 1;
+
+        if (!avisoHojeExibido) {
+            if (diaDoSemestre == 7 || diaDoSemestre == 14 || diaDoSemestre == 20) {
+                System.out.println("📝 HOJE TEM PROVA! Vá para a Sala de Aula.");
+                avisoHojeExibido = true;
             }
         }
     }
+
+    private void exibirAvisoDeAmanha() {
+        int diaDoSemestre = (diaAtual - 1) % 21 + 1;
+
+        if (diaDoSemestre == 6 || diaDoSemestre == 13 || diaDoSemestre == 19) {
+            System.out.println("⚠️  AMANHÃ TEM PROVA! Não se esqueça de ir para a Sala de Aula.");
+        }
+    }
+
 }

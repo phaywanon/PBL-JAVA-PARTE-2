@@ -12,6 +12,7 @@ public class Jogador extends Personagem {
     private double notaAcumulada = 0.0;
     private int provasFeitas = 0;
     private boolean formado = false;
+    private boolean foiParaSalaHoje = false;
 
     // Construtor
     public Jogador(String nome) {
@@ -152,23 +153,24 @@ public class Jogador extends Personagem {
     }
 
 
-    public void irParaCasa(Mapa mapa) {
+    public boolean irParaCasa(Mapa mapa) {
         if (local instanceof LocalCasa) {
             System.out.println("Você já está em casa!");
-            return;
+            return false    ;
         }
         mudarLocal(mapa.getPontoDeOnibus());
         if (dinheiro >= 3) {
             dinheiro -= 3;
             System.out.println("Você pegou o ônibus e chegou em casa.");
-            mudarLocal(mapa.getCasa());
         } else {
             System.out.println("Você está sem dinheiro e vai precisar ir andando pra casa.");
             setEnergia(getEnergia() - 15);
-            mudarLocal(mapa.getCasa());
         }
+        mudarLocal(mapa.getCasa());
         setEnergia(90);
         System.out.println("Você dormiu e acordou mais disposto!");
+
+        return true;
     }
 
 
@@ -257,5 +259,9 @@ public class Jogador extends Personagem {
             System.out.println("Você está cansado demais para trabalhar.");
         }
     }
+
+
+    public boolean isFoiParaSalaHoje() { return foiParaSalaHoje; }
+    public void setFoiParaSalaHoje(boolean foi) { this.foiParaSalaHoje = foi; }
 }
 

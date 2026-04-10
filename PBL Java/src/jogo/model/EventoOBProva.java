@@ -10,6 +10,18 @@ public class EventoOBProva extends EventosObrigatorios {
 
     @Override
     public void aplicarEvento (Jogador jogador){
+        System.out.println("📝 Prova nível " + nivelProva + " acontecendo!");
+
+        if (!(jogador.isFoiParaSalaHoje())){
+            System.out.println("⛔ Você perdeu a prova por não estar na sala!");
+
+            jogador.adicionarNota(0); // zerou
+            jogador.setMotivacao(jogador.getMotivacao() - 15);
+            jogador.setSaude(jogador.getSaude() - 10);
+
+            return;
+        }
+
         double nota = jogador.getConhecimentoSemestre() + (jogador.getNivelDeConhecimento()* 10);
         jogador.adicionarNota(nota);
         double requisito = 0.0;
