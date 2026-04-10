@@ -31,7 +31,15 @@ public class Jogador extends Personagem {
         return nivelDeConhecimento;
     }
 
-    public void setNivelDeConhecimento(double nivelDeConhecimento) { this.nivelDeConhecimento = nivelDeConhecimento; }
+    public void setNivelDeConhecimento(double nivelDeConhecimento) {
+        if (nivelDeConhecimento <= 0) {
+            this.nivelDeConhecimento = 0;
+        } else if (nivelDeConhecimento >= 110) {
+            this.nivelDeConhecimento = 110;
+        } else {
+            this.nivelDeConhecimento = nivelDeConhecimento;
+        }
+    }
 
     public int getMotivacao() {
         return motivacao;
@@ -80,14 +88,30 @@ public class Jogador extends Personagem {
             this.progresso = progresso;
     }
 
+    public double getNotaAcumulada() {
+        return notaAcumulada;
+    }
+
+    public int getProvasFeitas() {
+        return provasFeitas;
+    }
+
+    public boolean podeExplorar() {
+        return getEnergia() >= 20;
+    }
+
+    public void setFormado(boolean formado) {
+        this.formado = formado;
+    }
+
+
     public Local getLocal() {
         return local;
     }
 
-
     // Local inicial do Jogador
     public Jogador(String nome, Local localinicial) {
-        super(nome);
+        this(nome);
         this.local = localinicial;
     }
 
@@ -110,27 +134,11 @@ public class Jogador extends Personagem {
         }
     }
 
-    public boolean podeExplorar() {
-        return getEnergia() >= 20;
-    }
 
-
-//    public void explorar() {
-//        if (getEnergia() >= 20) {
-//            System.out.println("Você pode explorar o campus!");
-//            setEnergia(getEnergia() - 5);
-//            mudarLocal(new LocalCantina());
-//        } else if (getEnergia() < 20 && getEnergia() > 10) {
-//            System.out.println("AVISO: Vá para casa! Você está muito cansado!");
-//        } else if (getEnergia() <= 10) {
-//            mudarLocal(new LocalCasa());
-//        }
-//    }
-
-
-    public void lanchar() {
+    public void lanchar(Mapa mapa) {
         if (!(local instanceof LocalCantina)){
-            mudarLocal(new LocalCantina());
+            System.out.println("Você precisa estar na cantina para comprar um lanche!");
+            return;
         }
         if (dinheiro >= 5) {
             dinheiro -= 5;
@@ -144,16 +152,39 @@ public class Jogador extends Personagem {
     }
 
 
-    public void pegarOnibus() {
-        mudarLocal(new LocalPontoDeOnibus());
+    public void irParaCasa(Mapa mapa) {
+        if (local instanceof LocalCasa) {
+            System.out.println("Você já está em casa!");
+            return;
+        }
+        mudarLocal(mapa.getPontoDeOnibus());
         if (dinheiro >= 3) {
             dinheiro -= 3;
             System.out.println("Você pegou o ônibus e chegou em casa.");
-            mudarLocal(new LocalCasa());
+            mudarLocal(mapa.getCasa());
         } else {
             System.out.println("Você está sem dinheiro e vai precisar ir andando pra casa.");
             setEnergia(getEnergia() - 15);
-            mudarLocal(new LocalCasa());
+            mudarLocal(mapa.getCasa());
+        }
+        setEnergia(90);
+        System.out.println("Você dormiu e acordou mais disposto!");
+    }
+
+
+    public void irParaUEFS(Mapa mapa) {
+        if (!(local instanceof LocalCasa)) {
+            System.out.println("Você já está na UEFS!");
+            return;
+        }
+        if (dinheiro >= 3) {
+            dinheiro -= 3;
+            mudarLocal(mapa.getPontoDeOnibus());
+            System.out.println("Você chegou na UEFS!");
+        } else {
+            System.out.println("Sem dinheiro pra passagem! Vai andando...");
+            setEnergia(getEnergia() - 15);
+            mudarLocal(mapa.getPontoDeOnibus());
         }
     }
 
@@ -163,13 +194,6 @@ public class Jogador extends Personagem {
         provasFeitas++;
     }
 
-    public double getNotaAcumulada() {
-        return notaAcumulada;
-    }
-
-    public int getProvasFeitas() {
-        return provasFeitas;
-    }
 
     public void resetarSemestre() {
         notaAcumulada = 0;
@@ -179,19 +203,31 @@ public class Jogador extends Personagem {
 
 
     public void cursarDisciplina() {
+        if (!(local instanceof LocalSalaDeAula) &&
+                !(local instanceof LocalLaboratorio)) {
+            System.out.println("Você precisa estar na sala de aula ou no laboratório!");
+            return;
+        }
         if (getEnergia() >= 20) {
             this.conhecimentoSemestre += 15;
             setEnergia(getEnergia() - 20);
             this.progresso += 1.0; // Cada aula conta para a formatura
+            System.out.println("Você assistiu à aula e aprendeu bastante!");
+        } else {
+            System.out.println("Você está cansado demais para assistir aula!");
         }
     }
 
     public void lazer() {
+        if (!(local instanceof LocalDA)) {
+            System.out.println("Você precisa estar no DA de ECOMP para se divertir!");
+            return;
+        }
         if (dinheiro >= 1) {
             motivacao += 10;
             setEnergia(getEnergia() + 5);
             dinheiro -= 1;
-            System.out.println("Você jogou um dominó apostado no DA de ECOMP e conseguiu relaxar um pouco com as resenhas e risadas! (Apesar de ter perido dinheiro kkkkk");
+            System.out.println("Você jogou um dominó apostado no DA de ECOMP e conseguiu relaxar um pouco com as resenhas e risadas! (Apesar de ter perdido dinheiro kkkkk");
         } else {
             System.out.println("Se divertir custa dinheiro e você está com a conta zerada! Volte depois.");
         }
@@ -205,7 +241,21 @@ public class Jogador extends Personagem {
     public boolean isFormado() {
         return formado;
     }
-    public void setFormado(boolean formado) {
-        this.formado = formado;
+
+
+    public void trabalhar() {
+        if (!(local instanceof LocalLaboratorio)){
+            System.out.println("Você precisa estar no laboratório para trabalhar!");
+            return;
+        }
+        if (getEnergia() >= 20) {
+            setDinheiro(getDinheiro() + 20);
+            setEnergia(getEnergia() - 20);
+            conhecimentoSemestre += 5;
+            System.out.println("Você fez uma monitoria e ganhou 20 reais!");
+        } else {
+            System.out.println("Você está cansado demais para trabalhar.");
+        }
     }
 }
+

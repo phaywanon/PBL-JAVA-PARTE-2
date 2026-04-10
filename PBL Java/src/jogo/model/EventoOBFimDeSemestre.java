@@ -9,6 +9,7 @@ public class EventoOBFimDeSemestre extends EventosObrigatorios {
     public void aplicarEvento(Jogador jogador){
         if (jogador.getProvasFeitas() < 3){
             System.out.println("Você ainda não fez todas as provas.");
+            return;
         }
         double media = (jogador.getNotaAcumulada() / jogador.getProvasFeitas())/10;
         System.out.println("MÉDIA FINAL: " + media);

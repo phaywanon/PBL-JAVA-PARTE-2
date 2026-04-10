@@ -12,7 +12,7 @@ public class JogadorTest {
     private Local casa;
 
     @BeforeEach
-    void setup(){
+    void setup() {
         pontodeonibus = new LocalPontoDeOnibus();
         casa = new LocalCasa();
         jogador = new Jogador("PH", pontodeonibus);
@@ -20,57 +20,43 @@ public class JogadorTest {
 
 
     @Test
-    void testeCriacaoJogador(){
+    void testeCriacaoJogador() {
         assertEquals("PH", jogador.getNome());
         assertEquals(100, jogador.getEnergia());
-        assertEquals("Ponto de ônibus", jogador.getLocal().getNomeLocal());
+        assertEquals("Ponto de ônibus da UEFS", jogador.getLocal().getNomeLocal());
         assertEquals(0.0, jogador.getDesempenhoAcademico());
         assertEquals(100, jogador.getMotivacao());
     }
 
     @Test
-    void testeMudarLocal(){
+    void testeMudarLocal() {
         jogador.mudarLocal(casa);
         assertEquals("Casa", jogador.getLocal().getNomeLocal());
     }
 
     @Test
-    void testeEstudar(){
+    void testeEstudar() {
         int energiaInicial = jogador.getEnergia();
         double nivelDeConhecimentoInicial = jogador.getNivelDeConhecimento();
+        int conhecimentoSemetreInicial = jogador.getConhecimentoSemestre();
 
         jogador.estudar();
 
         assertEquals(energiaInicial - 3, jogador.getEnergia());
         assertEquals(nivelDeConhecimentoInicial + 0.5, jogador.getNivelDeConhecimento());
-    }
-
-    @Test
-    void testeExplorarComEnergiaAlta() {
-        jogador.setEnergia(25);
-
-        //jogador.explorar();
-
-        assertEquals("Cantina", jogador.getLocal().getNomeLocal());
-    }
-
-    @Test
-    void testeExplorarComEnergiaBaixa() {
-        jogador.setEnergia(5);
-
-        //jogador.explorar();
-
-        assertEquals("Casa", jogador.getLocal().getNomeLocal());
+        assertEquals(conhecimentoSemetreInicial + 5, jogador.getConhecimentoSemestre());
     }
 
     @Test
     void testeLancharComDinheiro(){
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getCantina());
         jogador.setDinheiro(10);
 
         int energiaInicial = jogador.getEnergia();
         int motivacaoInicial = jogador.getMotivacao();
 
-        jogador.lanchar();
+        jogador.lanchar(mapa);
 
         assertEquals(5, jogador.getDinheiro());
         assertEquals(energiaInicial + 3, jogador.getEnergia());
@@ -79,31 +65,93 @@ public class JogadorTest {
 
     @Test
     void testeLancharSemDinheiro(){
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getCantina());
         jogador.setDinheiro(3);
 
-        jogador.lanchar();
+        jogador.lanchar(mapa);
 
         assertEquals(3, jogador.getDinheiro());
     }
 
     @Test
-    void testePegarOnibusComDinheiro(){
+    void testePegarOnibusComDinheiroParaCasa(){
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getPontoDeOnibus());
         jogador.setDinheiro(10);
 
-        jogador.pegarOnibus();
+        jogador.irParaCasa(mapa);
 
         assertEquals("Casa", jogador.getLocal().getNomeLocal());
         assertEquals(7, jogador.getDinheiro());
     }
 
     @Test
-    void testePegarOnibusSemDinheiro() {
+    void testePegarOnibusSemDinheiroParaCasa() {
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getPontoDeOnibus());
         jogador.setDinheiro(2);
         int energiaInicial = jogador.getEnergia();
 
-        jogador.pegarOnibus();
+        jogador.irParaCasa(mapa);
 
         assertEquals("Casa", jogador.getLocal().getNomeLocal());
         assertEquals(energiaInicial - 15, jogador.getEnergia());
+    }
+
+    @Test
+    void testePegarOnibusComDinheiroParaUefs(){
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getCasa());
+        jogador.setDinheiro(10);
+
+        jogador.irParaUEFS(mapa);
+
+        assertEquals("Ponto de ônibus da UEFS", jogador.getLocal().getNomeLocal());
+        assertEquals(7, jogador.getDinheiro());
+    }
+
+    @Test
+    void testePegarOnibusSemDinheiroParaUefs() {
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getCasa());
+        jogador.setDinheiro(2);
+        int energiaInicial = jogador.getEnergia();
+
+        jogador.irParaUEFS(mapa);
+
+        assertEquals("Ponto de ônibus da UEFS", jogador.getLocal().getNomeLocal());
+        assertEquals(energiaInicial - 15, jogador.getEnergia());
+    }
+
+    @Test
+    void deveIrParaCasaDeQualquerLocal() {
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getCantina());
+        jogador.setDinheiro(10);
+
+        jogador.irParaCasa(mapa);
+
+        assertEquals("Casa", jogador.getLocal().getNomeLocal());
+    }
+
+    @Test
+    void naoDeveIrParaCasaSeJaEstiverEmCasa() {
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getCasa());
+        jogador.setDinheiro(10);
+
+        jogador.irParaCasa(mapa);
+
+        assertEquals("Casa", jogador.getLocal().getNomeLocal());
+        assertEquals(10, jogador.getDinheiro()); // dinheiro intacto, não cobrou passagem
+    }
+
+
+    @Test
+    void naoDeveFormarSemProgresso() {
+        Jogador j = new Jogador("PH");
+        new EventoOBFormatura().aplicarEvento(j);
+        assertFalse(j.isFormado());
     }
 }

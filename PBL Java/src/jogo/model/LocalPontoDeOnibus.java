@@ -2,7 +2,9 @@ package jogo.model;
 
 public class LocalPontoDeOnibus extends Local{
     public LocalPontoDeOnibus(){
-        super("Ponto de ônibus");
+        super("Ponto de ônibus da UEFS");
+        adicionarNPC(new PersonagemBichinhos());
+        adicionarNPC(new PersonagemBichinhos());
     }
 
     @Override
