@@ -96,7 +96,8 @@ public class JogadorTest {
         jogador.irParaCasa(mapa);
 
         assertEquals("Casa", jogador.getLocal().getNomeLocal());
-        assertEquals(energiaInicial - 15, jogador.getEnergia());
+        assertEquals(90, jogador.getEnergia());
+        assertEquals(2, jogador.getDinheiro()); // não pagou passagem
     }
 
     @Test
@@ -150,7 +151,8 @@ public class JogadorTest {
 
     @Test
     void naoDeveFormarSemProgresso() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
         new EventoOBFormatura().aplicarEvento(j);
         assertFalse(j.isFormado());
     }

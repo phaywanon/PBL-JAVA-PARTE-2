@@ -9,7 +9,8 @@ public class NPCTest {
 
     @Test
     void maeliDeveAumentarDesempenho() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
         double desempenhoInicial = j.getDesempenhoAcademico();
 
         NPC maeli = new PersonagemMaeli();

@@ -9,7 +9,8 @@ public class EventoAleatorioTest {
 
     @Test
     void eventoFestaDeveAlterarMotivacao() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
         int motivacaoInicial = j.getMotivacao();
 
         EventosAleatorios evento = new EventoALFesta();
@@ -20,7 +21,8 @@ public class EventoAleatorioTest {
 
     @Test
     void eventoDoencaDeveReduzirSaude() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
         int saudeInicial = j.getSaude();
 
         EventosAleatorios evento = new EventoALDoente();

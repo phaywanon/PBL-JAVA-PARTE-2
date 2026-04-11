@@ -12,7 +12,6 @@ public class JogoController {
     private boolean primeiroDia = true;
     private int diaAtual = 1;
     private boolean avisoHojeExibido = false;
-    private boolean foiParaSalaHoje = false;
 
     public void iniciarJogo() {
         sc = new Scanner(System.in);
@@ -103,7 +102,6 @@ public class JogoController {
         switch (escolha) {
             case 1 -> {
                 jogador.mudarLocal(mapa.getCantina());
-                ;
                 jogador.getLocal().eventoAoEntrar(jogador);
             }
             case 2 -> {
@@ -192,7 +190,10 @@ public class JogoController {
             case 7  -> new EventoOBProva(1).aplicarEvento(jogador);
             case 14 -> new EventoOBProva(2).aplicarEvento(jogador);
             case 20 -> new EventoOBProva(3).aplicarEvento(jogador);
-            case 21 -> new EventoOBFimDeSemestre().aplicarEvento(jogador);
+            case 21 ->{
+                new EventoOBFimDeSemestre().aplicarEvento(jogador);
+                new EventoOBFormatura().aplicarEvento(jogador);
+            }
         }
     }
 

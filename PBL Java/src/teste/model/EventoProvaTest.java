@@ -9,7 +9,8 @@ public class EventoProvaTest {
 
     @Test
     void aprovarQuandoNotaAlta() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
         j.setConhecimentoSemestre(50);
         j.setNivelDeConhecimento(5);
 
@@ -22,7 +23,8 @@ public class EventoProvaTest {
 
     @Test
     void reprovarQuandoNotaBaixa() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
         j.setConhecimentoSemestre(0);
         j.setNivelDeConhecimento(0);
 
@@ -33,3 +35,4 @@ public class EventoProvaTest {
         assertTrue(j.getMotivacao() < 100);
     }
 }
+

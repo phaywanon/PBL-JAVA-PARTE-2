@@ -14,9 +14,11 @@ public class Jogador extends Personagem {
     private boolean formado = false;
     private boolean foiParaSalaHoje = false;
 
-    // Construtor
-    public Jogador(String nome) {
+
+    // Construtor/Local inicial do Jogador
+    public Jogador(String nome, Local localinicial) {
         super(nome);
+        this.local = localinicial;
     }
 
     // Getters e Setters
@@ -110,11 +112,7 @@ public class Jogador extends Personagem {
         return local;
     }
 
-    // Local inicial do Jogador
-    public Jogador(String nome, Local localinicial) {
-        this(nome);
-        this.local = localinicial;
-    }
+
 
     // Para ele mudar de lugar
     public void mudarLocal(Local novoLocal) {

@@ -9,7 +9,8 @@ public class EventoFimDeSemestreTest {
 
     @Test
     void passarNoSemestre() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
 
         j.adicionarNota(80);
         j.adicionarNota(70);
@@ -24,7 +25,8 @@ public class EventoFimDeSemestreTest {
 
     @Test
     void reprovarNoSemestre() {
-        Jogador j = new Jogador("PH");
+        Mapa mapa = new Mapa();
+        Jogador j = new Jogador("PH", mapa.getCasa());
 
         j.adicionarNota(10);
         j.adicionarNota(20);
