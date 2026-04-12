@@ -24,4 +24,37 @@ public class LocalTest {
 
         assertTrue(temMaeli);
     }
+
+    @Test
+    void laboratorioDeveTerProfessor() {
+        Local laboratorio = new LocalLaboratorio();
+
+        boolean temProfessor = laboratorio.getPersonagensPresentes()
+                .stream()
+                .anyMatch(npc -> npc instanceof PersonagemProfessor);
+
+        assertTrue(temProfessor);
+    }
+
+    @Test
+    void pontoDeOnibusDeveTerBichinhos() {
+        Local ponto = new LocalPontoDeOnibus();
+
+        boolean temBichinho = ponto.getPersonagensPresentes()
+                .stream()
+                .anyMatch(npc -> npc instanceof PersonagemBichinhos);
+
+        assertTrue(temBichinho);
+    }
+
+    @Test
+    void cantinaDeveTerColegas() {
+        Local cantina = new LocalCantina();
+
+        boolean temColegas = cantina.getPersonagensPresentes()
+                .stream()
+                .anyMatch(npc -> npc instanceof PersonagemColegas);
+
+        assertTrue(temColegas);
+    }
 }

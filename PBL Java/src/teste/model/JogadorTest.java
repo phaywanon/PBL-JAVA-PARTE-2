@@ -156,4 +156,135 @@ public class JogadorTest {
         new EventoOBFormatura().aplicarEvento(j);
         assertFalse(j.isFormado());
     }
+
+    @Test
+    void testeEstudarSemMotivacao() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setMotivacao(5); // abaixo do mínimo para estudar
+
+        double conhecimentoAntes = jogador.getNivelDeConhecimento();
+        jogador.estudar();
+
+        assertEquals(conhecimentoAntes, jogador.getNivelDeConhecimento());
+    }
+
+    @Test
+    void testeMotivacaoNaoPassaDoLimite() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setMotivacao(200);
+
+        assertEquals(110, jogador.getMotivacao());
+    }
+
+    @Test
+    void testeMotivacaoNaoFicaNegativa() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setMotivacao(-50);
+
+        assertEquals(0, jogador.getMotivacao());
+    }
+
+    @Test
+    void testeEnergiaMaxima() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setEnergia(200);
+
+        assertEquals(110, jogador.getEnergia());
+    }
+
+    @Test
+    void testeEnergiaMinima() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setEnergia(-10);
+
+        assertEquals(0, jogador.getEnergia());
+    }
+
+    @Test
+    void testeProgressoNaoPassaDe100() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setProgresso(150);
+
+        assertEquals(100.0, jogador.getProgresso());
+    }
+
+    @Test
+    void testeProgressoNaoFicaNegativo() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.setProgresso(-10);
+
+        assertEquals(0.0, jogador.getProgresso());
+    }
+
+    @Test
+    void testeResetarSemestre() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        jogador.adicionarNota(80);
+        jogador.adicionarNota(70);
+        jogador.setConhecimentoSemestre(50);
+
+        jogador.resetarSemestre();
+
+        assertEquals(0, jogador.getNotaAcumulada());
+        assertEquals(0, jogador.getProvasFeitas());
+        assertEquals(0, jogador.getConhecimentoSemestre());
+    }
+
+    @Test
+    void testeTrabalharForaDoLaboratorio() {
+        Jogador jogador = new Jogador("PH", new LocalCantina());
+        double dinheiroAntes = jogador.getDinheiro();
+
+        jogador.trabalhar();
+
+        assertEquals(dinheiroAntes, jogador.getDinheiro());
+    }
+
+    @Test
+    void testeTrabalharNoLaboratorio() {
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getLaboratorio());
+        jogador.setDinheiro(0);
+
+        jogador.trabalhar();
+
+        assertEquals(20, jogador.getDinheiro());
+    }
+
+    @Test
+    void testeLazerForaDoDA() {
+        Jogador jogador = new Jogador("PH", new LocalCantina());
+        jogador.setDinheiro(10);
+        int motivacaoAntes = jogador.getMotivacao();
+
+        jogador.lazer();
+
+        assertEquals(motivacaoAntes, jogador.getMotivacao());
+    }
+
+    @Test
+    void testeCursarDisciplinaForaDaSala() {
+        Jogador jogador = new Jogador("PH", new LocalCantina());
+        int conhecimentoAntes = jogador.getConhecimentoSemestre();
+
+        jogador.cursarDisciplina();
+
+        assertEquals(conhecimentoAntes, jogador.getConhecimentoSemestre());
+    }
+
+    @Test
+    void testeFoiParaSalaHoje() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        assertFalse(jogador.isFoiParaSalaHoje());
+
+        jogador.setFoiParaSalaHoje(true);
+        assertTrue(jogador.isFoiParaSalaHoje());
+    }
+
+
+
+
+
+
+
 }

@@ -11,6 +11,7 @@ public class EventoProvaTest {
     void aprovarQuandoNotaAlta() {
         Mapa mapa = new Mapa();
         Jogador j = new Jogador("PH", mapa.getCasa());
+        j.setFoiParaSalaHoje(true);
         j.setConhecimentoSemestre(50);
         j.setNivelDeConhecimento(5);
 
@@ -25,6 +26,7 @@ public class EventoProvaTest {
     void reprovarQuandoNotaBaixa() {
         Mapa mapa = new Mapa();
         Jogador j = new Jogador("PH", mapa.getCasa());
+        j.setFoiParaSalaHoje(true);
         j.setConhecimentoSemestre(0);
         j.setNivelDeConhecimento(0);
 
@@ -34,5 +36,30 @@ public class EventoProvaTest {
 
         assertTrue(j.getMotivacao() < 100);
     }
+
+    @Test
+    void provaComSalaDeveCalcularNota() {
+        Mapa mapa = new Mapa();
+        Jogador jogador = new Jogador("PH", mapa.getSalaDeAula());
+        jogador.setFoiParaSalaHoje(true);
+        jogador.setConhecimentoSemestre(50);
+
+        new EventoOBProva(1).aplicarEvento(jogador);
+
+        assertEquals(1, jogador.getProvasFeitas());
+        assertTrue(jogador.getNotaAcumulada() > 0);
+    }
+
+    @Test
+    void provaSemSalaDeveZerar() {
+        Jogador jogador = new Jogador("PH", new LocalCantina());
+        jogador.setFoiParaSalaHoje(false);
+
+        new EventoOBProva(1).aplicarEvento(jogador);
+
+        assertEquals(0, jogador.getNotaAcumulada());
+        assertEquals(1, jogador.getProvasFeitas());
+    }
+
 }
 

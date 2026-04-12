@@ -18,4 +18,34 @@ public class NPCTest {
 
         assertTrue(j.getDesempenhoAcademico() > desempenhoInicial);
     }
+
+    @Test
+    void professorDeveAumentarConhecimento() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        double conhecimentoAntes = jogador.getNivelDeConhecimento();
+
+        new PersonagemProfessor().interagir(jogador);
+
+        assertTrue(jogador.getNivelDeConhecimento() > conhecimentoAntes);
+    }
+
+    @Test
+    void colegasDevemAumentarConhecimentoSemestre() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        int conhecimentoAntes = jogador.getConhecimentoSemestre();
+
+        new PersonagemColegas().interagir(jogador);
+
+        assertTrue(jogador.getConhecimentoSemestre() > conhecimentoAntes);
+    }
+
+    @Test
+    void bichinhoDeveAumentarMotivacao() {
+        Jogador jogador = new Jogador("PH", new LocalPontoDeOnibus());
+        int motivacaoAntes = jogador.getMotivacao();
+
+        new PersonagemBichinhos().interagir(jogador);
+
+        assertTrue(jogador.getMotivacao() > motivacaoAntes);
+    }
 }
