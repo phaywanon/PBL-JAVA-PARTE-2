@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="9f12e452-6306-41b8-9884-21cd95d48135" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PBL JAVA.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/PBL Java.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/jogo/controller/JogoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/jogo/controller/JogoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/jogo/model/Eventos.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/jogo/model/Eventos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/jogo/model/Jogador.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/jogo/model/Jogador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/jogo/model/LocalLaboratorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/jogo/model/LocalLaboratorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/jogo/model/LocalSalaDeAula.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/jogo/model/LocalSalaDeAula.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/controller/ExplorarTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/controller/ExplorarTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/EventoAleatorioTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/EventoAleatorioTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/EventoFimDeSemestreTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/EventoFimDeSemestreTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/EventoProvaTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/EventoProvaTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/JogadorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/JogadorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/LocalTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/LocalTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/NPCTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/NPCTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PBL Java/src/teste/model/PersonagemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/PBL Java/src/teste/model/PersonagemTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="3D0og6anruaLBTKfjRX8umAczAv" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Jogo.executor": "Run",
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.EventoAleatorioTest.executor": "Run",
+    "JUnit.EventoFimDeSemestreTest.executor": "Run",
+    "JUnit.EventoProvaTest.executor": "Run",
+    "JUnit.ExplorarTest.executor": "Run",
+    "JUnit.JogadorTest.executor": "Run",
+    "JUnit.LocalTest.executor": "Run",
+    "JUnit.NPCTest.executor": "Run",
+    "JUnit.PersonagemTest.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/PBL JAVA ATUALIZADO/PBL JAVA",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9f12e452-6306-41b8-9884-21cd95d48135" name="Changes" comment="" />
+      <created>1777428456923</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1777428456923</updated>
+      <workItem from="1777428458379" duration="285000" />
+      <workItem from="1777428754707" duration="128000" />
+      <workItem from="1777428962346" duration="664000" />
+      <workItem from="1778161751198" duration="5308000" />
+      <workItem from="1778287396871" duration="4916000" />
+      <workItem from="1778292346621" duration="308000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

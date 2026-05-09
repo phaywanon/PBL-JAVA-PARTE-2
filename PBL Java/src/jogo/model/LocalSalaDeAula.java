@@ -9,6 +9,5 @@ public class LocalSalaDeAula extends Local{
     @Override
     public void eventoAoEntrar(Jogador jogador){
         System.out.println("Você chegou na sala de aula. O professor está esperando em frente ao quadro.");
-        jogador.cursarDisciplina();
     }
 }

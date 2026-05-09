@@ -113,7 +113,6 @@ public class Jogador extends Personagem {
     }
 
 
-
     // Para ele mudar de lugar
     public void mudarLocal(Local novoLocal) {
         this.local = novoLocal;
@@ -122,72 +121,6 @@ public class Jogador extends Personagem {
 
 
     // Métodos do Jogador
-    public void estudar() {
-        if (motivacao >= 10) {
-            nivelDeConhecimento += 0.5;
-            conhecimentoSemestre += 5;
-            setEnergia(getEnergia() - 3);
-            motivacao -= 2;
-        } else {
-            System.out.println("Você está muito desmotivado para estudar. Não vai conseguir absorver nada dessa maneira!");
-        }
-    }
-
-
-    public void lanchar(Mapa mapa) {
-        if (!(local instanceof LocalCantina)){
-            System.out.println("Você precisa estar na cantina para comprar um lanche!");
-            return;
-        }
-        if (dinheiro >= 5) {
-            dinheiro -= 5;
-            setEnergia(getEnergia() + 3);
-            motivacao += 3;
-            System.out.println("Você comprou um lanche e está levemente revigorado!");
-        } else {
-            System.out.println("Dinheiro insuficiente!");
-        }
-
-    }
-
-
-    public boolean irParaCasa(Mapa mapa) {
-        if (local instanceof LocalCasa) {
-            System.out.println("Você já está em casa!");
-            return false    ;
-        }
-        mudarLocal(mapa.getPontoDeOnibus());
-        if (dinheiro >= 3) {
-            dinheiro -= 3;
-            System.out.println("Você pegou o ônibus e chegou em casa.");
-        } else {
-            System.out.println("Você está sem dinheiro e vai precisar ir andando pra casa.");
-            setEnergia(getEnergia() - 15);
-        }
-        mudarLocal(mapa.getCasa());
-        setEnergia(90);
-        System.out.println("Você dormiu e acordou mais disposto!");
-
-        return true;
-    }
-
-
-    public void irParaUEFS(Mapa mapa) {
-        if (!(local instanceof LocalCasa)) {
-            System.out.println("Você já está na UEFS!");
-            return;
-        }
-        if (dinheiro >= 3) {
-            dinheiro -= 3;
-            mudarLocal(mapa.getPontoDeOnibus());
-            System.out.println("Você chegou na UEFS!");
-        } else {
-            System.out.println("Sem dinheiro pra passagem! Vai andando...");
-            setEnergia(getEnergia() - 15);
-            mudarLocal(mapa.getPontoDeOnibus());
-        }
-    }
-
 
     public void adicionarNota(double nota){
         notaAcumulada += nota;
@@ -201,63 +134,9 @@ public class Jogador extends Personagem {
         conhecimentoSemestre = 0;
     }
 
-
-    public void cursarDisciplina() {
-        if (!(local instanceof LocalSalaDeAula) &&
-                !(local instanceof LocalLaboratorio)) {
-            System.out.println("Você precisa estar na sala de aula ou no laboratório!");
-            return;
-        }
-        if (getEnergia() >= 20) {
-            this.conhecimentoSemestre += 15;
-            setEnergia(getEnergia() - 20);
-            this.progresso += 1.0; // Cada aula conta para a formatura
-            System.out.println("Você assistiu à aula e aprendeu bastante!");
-        } else {
-            System.out.println("Você está cansado demais para assistir aula!");
-        }
-    }
-
-    public void lazer() {
-        if (!(local instanceof LocalDA)) {
-            System.out.println("Você precisa estar no DA de ECOMP para se divertir!");
-            return;
-        }
-        if (dinheiro >= 1) {
-            motivacao += 10;
-            setEnergia(getEnergia() + 5);
-            dinheiro -= 1;
-            System.out.println("Você jogou um dominó apostado no DA de ECOMP e conseguiu relaxar um pouco com as resenhas e risadas! (Apesar de ter perdido dinheiro kkkkk");
-        } else {
-            System.out.println("Se divertir custa dinheiro e você está com a conta zerada! Volte depois.");
-        }
-
-    }
-
-
-    public void interagirComNPC(NPC npc) { npc.interagir(this); }
-
-
     public boolean isFormado() {
         return formado;
     }
-
-
-    public void trabalhar() {
-        if (!(local instanceof LocalLaboratorio)){
-            System.out.println("Você precisa estar no laboratório para trabalhar!");
-            return;
-        }
-        if (getEnergia() >= 20) {
-            setDinheiro(getDinheiro() + 20);
-            setEnergia(getEnergia() - 20);
-            conhecimentoSemestre += 5;
-            System.out.println("Você fez uma monitoria e ganhou 20 reais!");
-        } else {
-            System.out.println("Você está cansado demais para trabalhar.");
-        }
-    }
-
 
     public boolean isFoiParaSalaHoje() { return foiParaSalaHoje; }
     public void setFoiParaSalaHoje(boolean foi) { this.foiParaSalaHoje = foi; }
