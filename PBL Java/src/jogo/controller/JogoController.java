@@ -231,18 +231,114 @@ public class JogoController {
     private JogoService jogoService;
     private Scanner sc;
 
+    private int lerOpcaoValida(int min, int max) {
+        while (true) {
+            if (sc.hasNextInt()) {
+                int opcao = sc.nextInt();
+                if (opcao >= min && opcao <= max) return opcao;
+                System.out.println("Digite um número entre " + min + " e " + max + "!");
+            } else {
+                System.out.println("Digite um número válido!");
+                sc.next(); // descarta o input inválido
+            }
+        }
+    }
+
     public void iniciarJogo() {
         sc = new Scanner(System.in);
+        exibirMenuInicial();
+    }
+
+    private void exibirMenuInicial() {
+        System.out.println("╔══════════════════════════════╗");
+        System.out.println("   🎓 BIXOQUEST               ");
+        System.out.println("   Da Matrícula à Formatura    ");
+        System.out.println("╚══════════════════════════════╝");
+        System.out.println("1 - Novo Jogo");
+        System.out.println("2 - Carregar Jogo");
+        System.out.println("3 - Deletar Save");
+        System.out.println("0 - Sair");
+
+        int opcao = lerOpcaoValida(0, 3);
+        switch (opcao) {
+            case 1 -> iniciarNovoJogo();
+            case 2 -> carregarJogo();
+            case 3 -> deletarSave();
+            case 0 -> System.out.println("Até logo!");
+            default -> { System.out.println("Opção inválida!"); exibirMenuInicial(); }
+        }
+    }
+
+    private void exibirSlots() {
+        JogoService temp = new JogoService();
+        System.out.println("=== SLOTS DE SAVE ===");
+        for (int i = 1; i <= 3; i++) {
+            EstadoDoJogo estado = temp.carregarEstado("slot" + i);
+            if (estado == null) {
+                System.out.println(i + " - [Vazio]");
+            } else {
+                System.out.println(i + " - " + estado.getNomeJogador()
+                        + " | Dia " + estado.getDiaAtual()
+                        + " | " + estado.getUltimoAcesso());
+            }
+        }
+    }
+
+    private void iniciarNovoJogo() {
+        exibirSlots();
+        System.out.println("Escolha um slot (1, 2 ou 3):");
+        int slot = lerOpcaoValida(0, 3);
+        if (slot == 0) { exibirMenuInicial(); return; }
+
+        sc.nextLine(); // limpa o buffer após nextInt
+        System.out.println("Digite seu nome:");
+        String nome = sc.nextLine();
+        System.out.println("Digite sua matrícula:");
+        String matricula = sc.nextLine();
+
         jogoService = new JogoService();
+        jogoService.novoJogo("slot" + slot, nome, matricula);
         loopPrincipal();
     }
+
+    private void carregarJogo() {
+        exibirSlots();
+        System.out.println("Escolha um slot para carregar:");
+        int slot = lerOpcaoValida(0, 3);
+        if (slot == 0) { exibirMenuInicial(); return; }
+
+
+        jogoService = new JogoService();
+        EstadoDoJogo estado = jogoService.carregarEstado("slot" + slot);
+        if (estado == null) {
+            System.out.println("Slot vazio! Escolha outro.");
+            carregarJogo(); // volta a pedir
+            return;
+        }
+        jogoService.carregarJogo("slot" + slot);
+        loopPrincipal();
+    }
+
+    private void deletarSave() {
+        exibirSlots();
+        System.out.println("Escolha um slot para deletar:");
+        int slot = lerOpcaoValida(0, 3);
+        if (slot == 0) { exibirMenuInicial(); return; }
+
+        jogoService = new JogoService();
+        jogoService.deletarJogo("slot" + slot);
+        System.out.println("Save deletado!");
+        exibirMenuInicial(); // volta pro menu
+    }
+
+
 
     private void loopPrincipal() {
         int opcao;
         do {
             exibirAvisoInicioDoDia(); // consulta o service, não calcula nada
             exibirMenu();
-            opcao = sc.nextInt();
+            opcao = lerOpcaoValida(0, 10);
             executarAcao(opcao);
         } while (opcao != 0 && !jogoService.getJogador().isFormado());
 
@@ -261,7 +357,7 @@ public class JogoController {
 
     private void executarAcaoCasa(int opcao) {
         switch (opcao) {
-            case 1 -> jogoService.irParaPonto();
+            case 1 -> jogoService.irParaUEFS();
             case 7 -> mostrarStatus();
             case 0 -> System.out.println("Até logo!");
             default -> System.out.println("Opção inválida!");
@@ -281,6 +377,7 @@ public class JogoController {
 
     private void executarAcaoUEFS(int opcao) {
         Local local = jogoService.getJogador().getLocal();
+
         switch (opcao) {
             case 1 -> jogoService.estudar();
             case 2 -> explorar(); // submenu de locais
@@ -294,6 +391,10 @@ public class JogoController {
             case 6 -> jogoService.trabalhar();
             case 7 -> interagirNPC();
             case 8 -> mostrarStatus();
+            case 9 -> {
+                jogoService.salvarJogo(jogoService.getSlotAtual());
+                System.out.println("Jogo salvo!");
+            }
             case 0 -> System.out.println("Até logo!");
             default -> System.out.println("Opção inválida!");
         }
@@ -337,14 +438,19 @@ public class JogoController {
         // Controller pergunta pro service — não calcula ele mesmo
         if (!jogoService.isAvisoHojeExibido() &&
                 jogoService.getEventoService().hojeTemProva(jogoService.getDiaAtual())) {
-            System.out.println("📝 HOJE TEM PROVA! Vá para a Sala de Aula.");
+            System.out.println("📝 HOJE TEM PROVA! Lembre de passar na Sala de Aula.");
             jogoService.setAvisoHojeExibido(true);
         }
     }
 
     private void mostrarStatus() {
+        int dia = jogoService.getDiaAtual();
+        int semestre = ((dia - 1) / 21) + 1;
+        int diaDoSemestre = (dia - 1) % 21 + 1;
+
         Jogador j = jogoService.getJogador();
         System.out.println("\n========= STATUS =========");
+        System.out.println("📅 Dia " + diaDoSemestre + " de 21 | Semestre " + semestre);
         System.out.println("👤 Nome: " + j.getNome());
         System.out.println("📍 Local: " + j.getLocal().getNomeLocal());
         System.out.println("⚡ Energia: " + j.getEnergia());
@@ -359,12 +465,22 @@ public class JogoController {
     private void exibirMenu() {
         Local local = jogoService.getJogador().getLocal();
 
+        System.out.println("📍 " + jogoService.getJogador().getLocal().getNomeLocal());
+
         if (local instanceof LocalCasa)           exibirMenuCasa();
         else if (local instanceof LocalPontoDeOnibus) exibirMenuPonto();
         else                                       exibirMenuUEFS();
     }
 
     private void exibirMenuCasa() {
+        int dia = jogoService.getDiaAtual();
+        int semestre = ((dia - 1) / 21) + 1;
+        int diaDoSemestre = (dia - 1) % 21 + 1;
+
+        System.out.println("╔══════════════════════════════╗");
+        System.out.println("  📅 Dia " + diaDoSemestre + " | 📆 Semestre " + semestre);
+        System.out.println("╚══════════════════════════════╝");
+
         System.out.println("1 - Ir para UEFS");
         System.out.println("7 - Ver status | 0 - Sair");
     }
@@ -392,6 +508,8 @@ public class JogoController {
 
         // sempre disponível
         System.out.println("7 - Interagir com NPC");
-        System.out.println("8 - Ver status | 0 - Sair");
+        System.out.println("8 - Ver status");
+        System.out.println("9 - Salvar jogo");
+        System.out.println("0 - Sair");
     }
 }

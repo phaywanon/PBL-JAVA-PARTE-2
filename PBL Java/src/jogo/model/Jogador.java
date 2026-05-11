@@ -116,7 +116,6 @@ public class Jogador extends Personagem {
     // Para ele mudar de lugar
     public void mudarLocal(Local novoLocal) {
         this.local = novoLocal;
-        System.out.println("Você agora está em: " + local.getNomeLocal());
     }
 
 
