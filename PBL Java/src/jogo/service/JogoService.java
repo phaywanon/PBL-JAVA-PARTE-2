@@ -53,14 +53,14 @@ public class JogoService {
 
     // Avanço de dia — tudo que o controller fazia em avancarDia()
     private void avancarDia() {
-        if (eventoService.amanhaTemProva(diaAtual)) {
-            System.out.println("⚠️  AMANHÃ TEM PROVA!");
-        }
-        eventoService.verificarEventosObrigatorios(jogador, diaAtual);
-        diaAtual++;
-        avisoHojeExibido = false;
+        eventoService.verificarEventosObrigatorios(jogador, diaAtual); // prova do dia atual
         eventoService.sortearEventoAleatorio(jogador);
         jogador.setFoiParaSalaHoje(false);
+        diaAtual++;
+        avisoHojeExibido = false;
+        if (eventoService.amanhaTemProva(diaAtual)) { // avisa com diaAtual já incrementado
+            System.out.println("⚠️  AMANHÃ TEM PROVA!");
+        }
         salvarJogo(slotAtual);
     }
 
@@ -124,9 +124,9 @@ public class JogoService {
             case "Cantina"         -> mapa.getCantina();
             case "Sala de Aula"    -> mapa.getSalaDeAula();
             case "Laboratório"     -> mapa.getLaboratorio();
-            case "Colegiado"       -> mapa.getColegiado();
+            case "Colegiado de ECOMP"       -> mapa.getColegiado();
             case "DA de ECOMP"     -> mapa.getDa();
-            case "Ponto de Ônibus" -> mapa.getPontoDeOnibus();
+            case "Ponto de ônibus da UEFS" -> mapa.getPontoDeOnibus();
             default                -> mapa.getCasa();
         };
     }

@@ -13,9 +13,11 @@ public class JogadorService{
     public void estudar() {
         if (jogador.getMotivacao() < 10) {
             System.out.println("Você está muito desmotivado para estudar!");
+            return;
         }
         if (jogador.getEnergia() < 10) {
             System.out.println("Você está cansado demais para estudar!");
+            return;
         }
         if (jogador.getMotivacao() >= 10) {
             jogador.setNivelDeConhecimento(jogador.getNivelDeConhecimento() + 0.5);
