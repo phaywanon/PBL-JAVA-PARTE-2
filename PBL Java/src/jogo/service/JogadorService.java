@@ -61,7 +61,8 @@ public class JogadorService{
         }
         jogador.mudarLocal(mapa.getCasa());
         jogador.setEnergia(90);
-        System.out.println("Você dormiu e acordou mais disposto!");
+        jogador.setSaude(Math.min(jogador.getSaude() + 15, 100));
+        System.out.println("Você dormiu, descansou e acordou mais disposto!");
 
         return true;
     }
@@ -92,7 +93,6 @@ public class JogadorService{
         if (jogador.getEnergia() >= 20) {
             jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 15);
             jogador.setEnergia(jogador.getEnergia() - 20);
-            jogador.setProgresso(jogador.getProgresso() + 1.0); // Cada aula conta para a formatura
             System.out.println("Você assistiu à aula e aprendeu bastante!");
         } else {
             System.out.println("Você está cansado demais para assistir aula!");

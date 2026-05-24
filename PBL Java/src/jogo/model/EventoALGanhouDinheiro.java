@@ -6,9 +6,17 @@ public class EventoALGanhouDinheiro extends EventosAleatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
-        System.out.println("Você achou 20 reais no chão!");
+    public Class<? extends Local> getLocalPermitido() {
+        return LocalCantina.class;
+    }
 
+    @Override
+    public void aplicarEvento(Jogador jogador) {
         jogador.setDinheiro(jogador.getDinheiro() + 20);
+    }
+
+    @Override
+    public String getMensagem() {
+        return "Você achou 20 reais no chão!";
     }
 }

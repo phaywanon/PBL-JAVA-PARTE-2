@@ -7,9 +7,11 @@ public class EventoALPerdeuDinheiro extends EventosAleatorios {
 
     @Override
     public void aplicarEvento(Jogador jogador) {
-        System.out.println("Sua calça estava com o bolso furado e você perdeu 10 reais.");
-
         jogador.setDinheiro(jogador.getDinheiro() - 10);
+    }
+
+    public String getMensagem() {
+        return "Sua calça estava com o bolso furado e você perdeu 10 reais.";
     }
 }
 

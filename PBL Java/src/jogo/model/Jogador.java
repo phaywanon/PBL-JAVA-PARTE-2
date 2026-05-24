@@ -120,7 +120,6 @@ public class Jogador extends Personagem {
 
 
     // Métodos do Jogador
-
     public void adicionarNota(double nota){
         notaAcumulada += nota;
         provasFeitas++;

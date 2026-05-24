@@ -24,6 +24,7 @@ public class JogoController {
 
     public void iniciarJogo() {
         sc = new Scanner(System.in);
+        jogoService = new JogoService();
         exibirMenuInicial();
     }
 
@@ -68,16 +69,24 @@ public class JogoController {
         int slot = lerOpcaoValida(0, 3);
         if (slot == 0) { exibirMenuInicial(); return; }
 
-        sc.nextLine(); // limpa o buffer após nextInt
+        // verifica ANTES de pedir nome/matrícula
+        EstadoDoJogo existente = jogoService.carregarEstado("slot" + slot);
+        if (existente != null) {
+            System.out.println("❌ Slot já ocupado! Delete o save antes de criar um novo.");
+            iniciarNovoJogo(); // volta a pedir
+            return;
+        }
+
+        sc.nextLine();
         System.out.println("Digite seu nome:");
         String nome = sc.nextLine();
         System.out.println("Digite sua matrícula:");
         String matricula = sc.nextLine();
 
-        jogoService = new JogoService();
-        jogoService.novoJogo("slot" + slot, nome, matricula);
-        loopPrincipal();
+        boolean criou = jogoService.novoJogo("slot" + slot, nome, matricula);
+        if (criou) loopPrincipal();
     }
+
 
     private void carregarJogo() {
         exibirSlots();
@@ -85,17 +94,17 @@ public class JogoController {
         int slot = lerOpcaoValida(0, 3);
         if (slot == 0) { exibirMenuInicial(); return; }
 
-
-        jogoService = new JogoService();
         EstadoDoJogo estado = jogoService.carregarEstado("slot" + slot);
         if (estado == null) {
             System.out.println("Slot vazio! Escolha outro.");
-            carregarJogo(); // volta a pedir
+            carregarJogo();
             return;
         }
+
         jogoService.carregarJogo("slot" + slot);
         loopPrincipal();
     }
+
 
     private void deletarSave() {
         exibirSlots();
@@ -103,7 +112,6 @@ public class JogoController {
         int slot = lerOpcaoValida(0, 3);
         if (slot == 0) { exibirMenuInicial(); return; }
 
-        jogoService = new JogoService();
         jogoService.deletarJogo("slot" + slot);
         System.out.println("Save deletado!");
         exibirMenuInicial(); // volta pro menu

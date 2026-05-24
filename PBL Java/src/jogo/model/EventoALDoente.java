@@ -7,11 +7,14 @@ public class EventoALDoente extends EventosAleatorios{
 
     @Override
     public void aplicarEvento(Jogador jogador) {
-        System.out.println("Você comeu algo estragado no bandejão e ficou doente...");
-
         jogador.setSaude(jogador.getSaude() - 20);
         jogador.setEnergia(jogador.getEnergia() - 10);
         jogador.setMotivacao(jogador.getMotivacao() - 10);
+    }
+
+    @Override
+    public String getMensagem() {
+        return "Você comeu algo estragado no bandejão e ficou doente...";
     }
 }
 

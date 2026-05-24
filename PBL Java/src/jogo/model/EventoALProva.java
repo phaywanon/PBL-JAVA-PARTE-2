@@ -2,8 +2,11 @@ package jogo.model;
 import java.util.Random;
 
 public class EventoALProva extends EventosAleatorios {
-
     private int nivelProva;
+    private double nota;
+    private double requisito;
+    private boolean aprovado;
+    private double variacao;
     private Random random = new Random();
 
     public EventoALProva(int nivelProva) {
@@ -12,40 +15,68 @@ public class EventoALProva extends EventosAleatorios {
     }
 
     @Override
+    public Class<? extends Local> getLocalPermitido() {
+        return LocalSalaDeAula.class;
+    }
+
+
+    @Override
     public void aplicarEvento(Jogador jogador) {
 
-        // base do jogador
-        double base = jogador.getConhecimentoSemestre()
-                + (jogador.getNivelDeConhecimento() * 10);
+        double baseEsforco = Math.min(jogador.getConhecimentoSemestre(), 100);
 
-        // fator aleatório (-10 até +10)
-        int variacao = random.nextInt(21) - 10;
+        double baseConhecimento =
+                (jogador.getNivelDeConhecimento() / 110.0) * 2;
 
-        double nota = base + variacao;
+        // fator aleatório (-1 até +1)
+        variacao = (random.nextDouble() * 2) - 1;
 
-        double requisito;
-        if (nivelProva == 1) {
-            requisito = 40;
-        } else if (nivelProva == 2) {
-            requisito = 70;
-        } else {
-            requisito = 90;
+        double notaBruta = (baseEsforco / 100.0) * 8 + baseConhecimento;
+        nota = Math.min(Math.round(notaBruta * 100.0) / 100.0, 10.0);
+
+        if (nota < 0) {
+            nota = 0;
         }
-
-        System.out.println("Base: " + base);
-        System.out.println("Variação: " + variacao);
-        System.out.println("Nota final: " + nota);
 
         jogador.adicionarNota(nota);
 
-        if (nota >= requisito) {
-            System.out.println("Aprovado!");
-            jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() + 5);
-            jogador.setMotivacao(jogador.getMotivacao() + 5);
+        requisito = switch (nivelProva) {
+            case 1 -> 4.0;
+            case 2 -> 6.0;
+            case 3 -> 7.0;
+            default -> 5.0;
+        };
+
+        aprovado = nota >= requisito;
+
+        if (aprovado) {
+            jogador.setDesempenhoAcademico( jogador.getDesempenhoAcademico() + 5);
+            jogador.setMotivacao( jogador.getMotivacao() + 5);
         } else {
-            System.out.println("Reprovado...");
-            jogador.setSaude(jogador.getSaude() - 5);
-            jogador.setMotivacao(jogador.getMotivacao() - 10);
+            jogador.setSaude( jogador.getSaude() - 5);
+            jogador.setMotivacao( jogador.getMotivacao() - 10);
         }
+    }
+
+    @Override
+    public String getMensagem() {
+        String resultado = aprovado
+                ? "Você foi bem na prova surpresa!"
+                : "A prova surpresa te pegou desprevenido...";
+
+        return """
+               Você teve uma PROVA SURPRESA!
+               
+               Nível da prova: %d
+               Nota final: %.1f
+               Nota mínima: %.1f
+               
+               %s
+               """.formatted(
+                nivelProva,
+                nota,
+                requisito,
+                resultado
+        );
     }
 }

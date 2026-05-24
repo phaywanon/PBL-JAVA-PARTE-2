@@ -22,6 +22,7 @@ public class EstadoDoJogo {
     private boolean formado;
     private boolean foiParaSalaHoje;
     private String localAtual; // salva só o NOME do local, não o objeto
+    private String matricula;
 
     // construtor vazio obrigatório pro Gson
     public EstadoDoJogo() {}
@@ -61,4 +62,6 @@ public class EstadoDoJogo {
     public void setFoiParaSalaHoje(boolean v) { this.foiParaSalaHoje = v; }
     public String getLocalAtual() { return localAtual; }
     public void setLocalAtual(String localAtual) { this.localAtual = localAtual; }
+    public String getMatricula() { return matricula; }
+    public void setMatricula(String matricula) { this.matricula = matricula; }
 }

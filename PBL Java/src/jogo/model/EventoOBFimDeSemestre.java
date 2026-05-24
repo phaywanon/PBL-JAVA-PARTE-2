@@ -11,8 +11,8 @@ public class EventoOBFimDeSemestre extends EventosObrigatorios {
             System.out.println("Você ainda não fez todas as provas.");
             return;
         }
-        double media = (jogador.getNotaAcumulada() / jogador.getProvasFeitas())/10;
-        System.out.println("MÉDIA FINAL: " + media);
+        double media = (jogador.getNotaAcumulada() / jogador.getProvasFeitas());
+        System.out.printf("MÉDIA FINAL: %.2f%n", media);
         if (media >= 7){
             jogador.setProgresso(jogador.getProgresso() + 10);
             System.out.println("Semestre concluído! Progresso total: " + jogador.getProgresso() + "%");

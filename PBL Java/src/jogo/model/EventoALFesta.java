@@ -6,10 +6,19 @@ public class EventoALFesta extends EventosAleatorios{
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
-        System.out.println("Teve uma calourada no campus e você se divertiu bastante!");
+    public Class<? extends Local> getLocalPermitido() {
+        return LocalCantina.class;
+    }
 
+
+    @Override
+    public void aplicarEvento(Jogador jogador) {
         jogador.setMotivacao(jogador.getMotivacao() + 20);
         jogador.setEnergia(jogador.getEnergia() - 10);
     }
+
+    public String getMensagem() {
+        return "Teve uma calourada no campus e você se divertiu bastante!";
+    }
+
 }

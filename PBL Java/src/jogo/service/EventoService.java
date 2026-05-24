@@ -18,6 +18,9 @@ public class EventoService {
         eventos.add(new EventoALMaterialCaro());
         eventos.add(new EventoALMilagre());
         eventos.add(new EventoALPerdeuDinheiro());
+        eventos.add(new EventoALProva(1));
+        eventos.add(new EventoALProva(2));
+        eventos.add(new EventoALProva(3));
     }
 
     // Sorteia evento aleatório — retorna mensagem ou null se não sortear nada
@@ -28,9 +31,25 @@ public class EventoService {
         }
 
         if (random.nextInt(100) < 30) {
-            EventosAleatorios evento = eventos.get(random.nextInt(eventos.size()));
-            evento.aplicarEvento(jogador); // por enquanto ainda printa — ok!
-            return evento.getDescricao();
+            // filtra só os eventos permitidos no local atual
+            List<EventosAleatorios> permitidos = new ArrayList<>();
+            for (EventosAleatorios e : eventos) {
+                Class<? extends Local> localPermitido = e.getLocalPermitido();
+                if (localPermitido == null ||
+                        localPermitido.isInstance(jogador.getLocal())) {
+                    permitidos.add(e);
+                }
+            }
+
+            if (permitidos.isEmpty()) return null;
+
+            EventosAleatorios evento = permitidos.get(random.nextInt(permitidos.size()));
+            evento.aplicarEvento(jogador);
+            return "\n==================EVENTO==================\n"
+                    + evento.getDescricao()
+                    + "\n"
+                    + evento.getMensagem()
+                    + "\n";
         }
         return null;
     }

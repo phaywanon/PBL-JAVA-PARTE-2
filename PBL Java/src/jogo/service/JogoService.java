@@ -13,7 +13,8 @@ public class JogoService {
     private String slotAtual;
     private JogadorService jogadorService;
     private EventoService eventoService;
-    private JogoRepository repository; // ← adiciona
+    private JogoRepository repository;
+    private String matriculaAtual;
 
     public JogoService() {
         this.repository = new JogoRepositoryJson();
@@ -43,12 +44,21 @@ public class JogoService {
 
     public void explorar(int escolha) {
         switch (escolha) {
-            case 1 -> { jogador.mudarLocal(mapa.getCantina());    jogador.getLocal().eventoAoEntrar(jogador); }
-            case 2 -> { jogador.mudarLocal(mapa.getSalaDeAula()); jogador.getLocal().eventoAoEntrar(jogador); jogador.setFoiParaSalaHoje(true); }
-            case 3 -> { jogador.mudarLocal(mapa.getLaboratorio());jogador.getLocal().eventoAoEntrar(jogador); }
-            case 4 -> { jogador.mudarLocal(mapa.getColegiado());  jogador.getLocal().eventoAoEntrar(jogador); }
-            case 5 -> { jogador.mudarLocal(mapa.getDa());         jogador.getLocal().eventoAoEntrar(jogador); }
+            case 1 -> jogador.mudarLocal(mapa.getCantina());
+            case 2 -> { jogador.mudarLocal(mapa.getSalaDeAula()); jogador.setFoiParaSalaHoje(true); }
+            case 3 -> jogador.mudarLocal(mapa.getLaboratorio());
+            case 4 -> jogador.mudarLocal(mapa.getColegiado());
+            case 5 -> jogador.mudarLocal(mapa.getDa());
+            default -> { System.out.println("Opção inválida!"); return; }
         }
+
+        String evento = eventoService.sortearEventoAleatorio(jogador);
+
+        if (evento != null) {
+            System.out.println(evento);
+        }
+
+        jogador.getLocal().eventoAoEntrar(jogador);
     }
 
     // Avanço de dia — tudo que o controller fazia em avancarDia()
@@ -75,7 +85,6 @@ public class JogoService {
     // JogoService
     public void irParaPonto()       { jogador.mudarLocal(mapa.getPontoDeOnibus()); }
     public void entrarNaUEFS()      { jogador.mudarLocal(mapa.getCantina()); } // ponto de entrada padrão
-    public void fazerCarinhoNoBichinho() { jogadorService.interagirComNPC( new PersonagemBichinhos()); }
 
 
     // Jogador → EstadoDoJogo (pra salvar)
@@ -98,6 +107,7 @@ public class JogoService {
         e.setFormado(jogador.isFormado());
         e.setFoiParaSalaHoje(jogador.isFoiParaSalaHoje());
         e.setLocalAtual(jogador.getLocal().getNomeLocal()); // salva o nome
+        e.setMatricula(matriculaAtual);
         return e;
     }
 
@@ -131,14 +141,21 @@ public class JogoService {
         };
     }
 
-    public void novoJogo(String slot, String nome, String matricula) {
+    public boolean novoJogo(String slot, String nome, String matricula) {
+        EstadoDoJogo existente = repository.carregar(slot);
+        if (existente != null) {
+            System.out.println("❌ Slot já ocupado! Delete o save antes de criar um novo.");
+            return false;
+        }
         this.slotAtual = slot;
+        this.matriculaAtual = matricula;
         this.mapa = new Mapa();
         this.jogador = new Jogador(nome + " (" + matricula + ")", mapa.getCasa());
         this.jogadorService = new JogadorService(jogador);
         this.diaAtual = 1;
-        salvarJogo(slotAtual);
+        salvarJogo(slot);
         System.out.println("Novo jogo iniciado no " + slot + "!");
+        return true;
     }
 
     public EstadoDoJogo carregarEstado(String slot) {
@@ -166,7 +183,4 @@ public class JogoService {
         estadoParaJogador(estado);
         System.out.println("Jogo carregado!");
     }
-
-
-
 }
