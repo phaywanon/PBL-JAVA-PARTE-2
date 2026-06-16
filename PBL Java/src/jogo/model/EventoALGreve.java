@@ -6,12 +6,14 @@ public class EventoALGreve extends EventosAleatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setEnergia(jogador.getEnergia() + 10);
         jogador.setMotivacao(jogador.getMotivacao() - 10);
         jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() - 5);
         jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() - 10);
         jogador.setNivelDeConhecimento(jogador.getNivelDeConhecimento() - 1);
+
+        return getMensagem();
     }
 
     public String getMensagem() {

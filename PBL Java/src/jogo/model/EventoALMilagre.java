@@ -11,12 +11,14 @@ public class EventoALMilagre extends EventosAleatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setNivelDeConhecimento(jogador.getNivelDeConhecimento() + 2);
         jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 20);
         jogador.setSaude(jogador.getSaude() + 5);
         jogador.setEnergia(jogador.getEnergia() + 10);
         jogador.setMotivacao(jogador.getMotivacao() + 15);
+
+        return getMensagem();
     }
 
     public String getMensagem() {

@@ -11,6 +11,6 @@ public abstract class Eventos {
         this.descricao = descricao;
     }
 
-    public abstract void aplicarEvento(Jogador jogador);
+    public abstract String aplicarEvento(Jogador jogador);
 
 }

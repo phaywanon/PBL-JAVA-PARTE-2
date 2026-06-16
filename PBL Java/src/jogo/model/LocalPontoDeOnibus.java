@@ -7,9 +7,8 @@ public class LocalPontoDeOnibus extends Local{
     }
 
     @Override
-    public void eventoAoEntrar(Jogador jogador){
-        System.out.println("Você chegou ao ponto de ônibus. A passagem custa 3 reais.");
-        System.out.println("Há uns cachorrinhos fofos por aqui! Use 'Interagir com NPC' para fazer carinho.");
+    public String eventoAoEntrar(Jogador jogador){
+        return "Você chegou ao ponto de ônibus. A passagem custa 3 reais.\n Há uns cachorrinhos fofos por aqui! Use 'Interagir com NPC' para fazer carinho.";
     }
 
 }

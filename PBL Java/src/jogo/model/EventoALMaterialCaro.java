@@ -11,10 +11,12 @@ public class EventoALMaterialCaro extends EventosAleatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setDinheiro(jogador.getDinheiro() - 50);
         jogador.setEnergia(jogador.getEnergia() - 10);
         jogador.setMotivacao(jogador.getMotivacao() - 35);
+
+        return getMensagem();
     }
 
     public String getMensagem() {

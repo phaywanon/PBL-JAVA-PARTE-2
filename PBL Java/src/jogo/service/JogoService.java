@@ -24,54 +24,59 @@ public class JogoService {
     public String getSlotAtual() { return slotAtual; }
 
     // Delega ações pro JogadorService
-    public void estudar()                    { jogadorService.estudar(); }
-    public void lanchar()                    { jogadorService.lanchar(mapa); }
-    public void lazer()                      { jogadorService.lazer(); }
-    public void trabalhar()                  { jogadorService.trabalhar(); }
-    public void cursarDisciplina()           { jogadorService.cursarDisciplina(); }
-    public void interagirComNPC(NPC npc)     { jogadorService.interagirComNPC(npc); }
+    public String estudar()                    { return jogadorService.estudar(); }
+    public String lanchar()                    { return jogadorService.lanchar(mapa); }
+    public String lazer()                      { return jogadorService.lazer(); }
+    public String trabalhar()                  { return jogadorService.trabalhar(); }
+    public String cursarDisciplina()           { return jogadorService.cursarDisciplina(); }
+    public String interagirComNPC(NPC npc)     { return jogadorService.interagirComNPC(npc); }
 
-    public boolean irParaCasa() {
-        boolean foiPraCasa = jogadorService.irParaCasa(mapa);
-        if (foiPraCasa) avancarDia();
-        return foiPraCasa;
+    public String irParaCasa() {
+        String msg = jogadorService.irParaCasa(mapa);
+        if (!msg.contains("já está em casa")) {
+            msg += "\n" + avancarDia();
+        }
+        return msg;
     }
 
-    public void irParaUEFS() {
-        jogadorService.irParaUEFS(mapa);
+    public String irParaUEFS() {
         primeiroDia = false;
+        return jogadorService.irParaUEFS(mapa);
     }
 
-    public void explorar(int escolha) {
+    public String explorar(int escolha) {
         switch (escolha) {
             case 1 -> jogador.mudarLocal(mapa.getCantina());
             case 2 -> { jogador.mudarLocal(mapa.getSalaDeAula()); jogador.setFoiParaSalaHoje(true); }
             case 3 -> jogador.mudarLocal(mapa.getLaboratorio());
             case 4 -> jogador.mudarLocal(mapa.getColegiado());
             case 5 -> jogador.mudarLocal(mapa.getDa());
-            default -> { System.out.println("Opção inválida!"); return; }
+            default -> { return "Opção inválida!"; }
         }
+
+        String msg = "";
+        String descricaoLocal = jogador.getLocal().eventoAoEntrar(jogador);
+        msg += descricaoLocal + "\n";
 
         String evento = eventoService.sortearEventoAleatorio(jogador);
+        if (evento != null) msg += evento;
 
-        if (evento != null) {
-            System.out.println(evento);
-        }
-
-        jogador.getLocal().eventoAoEntrar(jogador);
+        return msg;
     }
 
     // Avanço de dia — tudo que o controller fazia em avancarDia()
-    private void avancarDia() {
-        eventoService.verificarEventosObrigatorios(jogador, diaAtual); // prova do dia atual
-        eventoService.sortearEventoAleatorio(jogador);
+    private String avancarDia() {
+        String msg = "";
+        String eventos = eventoService.verificarEventosObrigatorios(jogador, diaAtual);
+        if (eventos != null && !eventos.isBlank()) msg += eventos + "\n";
         jogador.setFoiParaSalaHoje(false);
         diaAtual++;
         avisoHojeExibido = false;
-        if (eventoService.amanhaTemProva(diaAtual)) { // avisa com diaAtual já incrementado
-            System.out.println("⚠️  AMANHÃ TEM PROVA!");
+        if (eventoService.amanhaTemProva(diaAtual)) {
+            msg += "⚠️ AMANHÃ TEM PROVA!";
         }
         salvarJogo(slotAtual);
+        return msg;
     }
 
     // Getters para o controller consultar
@@ -83,7 +88,11 @@ public class JogoService {
     public EventoService getEventoService() { return eventoService; }
 
     // JogoService
-    public void irParaPonto()       { jogador.mudarLocal(mapa.getPontoDeOnibus()); }
+    public String irParaPonto() {
+        jogador.mudarLocal(mapa.getPontoDeOnibus());
+        return jogador.getLocal().eventoAoEntrar(jogador);
+    }
+
     public void entrarNaUEFS()      { jogador.mudarLocal(mapa.getCantina()); } // ponto de entrada padrão
 
 
@@ -143,10 +152,7 @@ public class JogoService {
 
     public boolean novoJogo(String slot, String nome, String matricula) {
         EstadoDoJogo existente = repository.carregar(slot);
-        if (existente != null) {
-            System.out.println("❌ Slot já ocupado! Delete o save antes de criar um novo.");
-            return false;
-        }
+        if (existente != null) return false;
         this.slotAtual = slot;
         this.matriculaAtual = matricula;
         this.mapa = new Mapa();
@@ -154,7 +160,6 @@ public class JogoService {
         this.jogadorService = new JogadorService(jogador);
         this.diaAtual = 1;
         salvarJogo(slot);
-        System.out.println("Novo jogo iniciado no " + slot + "!");
         return true;
     }
 
@@ -169,18 +174,13 @@ public class JogoService {
     public void salvarJogo(String slot) {
         EstadoDoJogo estado = jogadorParaEstado(slot);
         repository.salvar(estado, slot);
-        System.out.println("Jogo salvo no " + slot + "!");
     }
 
     public void carregarJogo(String slot) {
         this.slotAtual = slot;
         EstadoDoJogo estado = repository.carregar(slot);
-        if (estado == null) {
-            System.out.println("Slot vazio!");
-            return;
-        }
+        if (estado == null) return;
         mapa = new Mapa();
         estadoParaJogador(estado);
-        System.out.println("Jogo carregado!");
     }
 }

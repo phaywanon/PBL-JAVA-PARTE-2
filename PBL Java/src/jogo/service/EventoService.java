@@ -55,17 +55,20 @@ public class EventoService {
     }
 
     // Verifica eventos obrigatórios pelo dia do semestre
-    public void verificarEventosObrigatorios(Jogador jogador, int diaAtual) {
+    public String verificarEventosObrigatorios(Jogador jogador, int diaAtual) {
         int diaDoSemestre = (diaAtual - 1) % 21 + 1;
+        String msg = "";
         switch (diaDoSemestre) {
-            case 7  -> new EventoOBProva(1).aplicarEvento(jogador);
-            case 14 -> new EventoOBProva(2).aplicarEvento(jogador);
-            case 20 -> new EventoOBProva(3).aplicarEvento(jogador);
+            case 7  -> { new EventoOBProva(1).aplicarEvento(jogador); msg = "📝 Prova 1 realizada!"; }
+            case 14 -> { new EventoOBProva(2).aplicarEvento(jogador); msg = "📝 Prova 2 realizada!"; }
+            case 20 -> { new EventoOBProva(3).aplicarEvento(jogador); msg = "📝 Prova 3 realizada!"; }
             case 21 -> {
                 new EventoOBFimDeSemestre().aplicarEvento(jogador);
                 new EventoOBFormatura().aplicarEvento(jogador);
+                msg = "🎓 Fim de semestre!";
             }
         }
+        return msg;
     }
 
     // Avisa se amanhã tem prova

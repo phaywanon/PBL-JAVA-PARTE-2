@@ -7,9 +7,9 @@ public class LocalColegiado extends Local{
     }
 
     @Override
-    public void eventoAoEntrar(Jogador jogador){
-        System.out.println("Você entrou no colegiado. Maeli é a secretária/amiga de todo estudante de ECOMP! " +
-                "Ela sempre lhe dará dicas de como melhorar seu desempenho acadêmico.");
+    public String eventoAoEntrar(Jogador jogador){
+        return"Você entrou no colegiado. Maeli é a secretária/amiga de todo estudante de ECOMP! " +
+                "Ela sempre lhe dará dicas de como melhorar seu desempenho acadêmico.";
     }
 
 }

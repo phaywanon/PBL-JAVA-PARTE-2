@@ -6,23 +6,26 @@ public class EventoOBFimDeSemestre extends EventosObrigatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador){
-        if (jogador.getProvasFeitas() < 3){
-            System.out.println("Você ainda não fez todas as provas.");
-            return;
+    public String aplicarEvento(Jogador jogador) {
+        if (jogador.getProvasFeitas() < 3) {
+            return "Você ainda não fez todas as provas.";
         }
-        double media = (jogador.getNotaAcumulada() / jogador.getProvasFeitas());
-        System.out.printf("MÉDIA FINAL: %.2f%n", media);
-        if (media >= 7){
+
+        String msg = "";
+        double media = jogador.getNotaAcumulada() / jogador.getProvasFeitas();
+        msg += String.format("MÉDIA FINAL: %.2f\n", media);
+
+        if (media >= 7) {
             jogador.setProgresso(jogador.getProgresso() + 10);
-            System.out.println("Semestre concluído! Progresso total: " + jogador.getProgresso() + "%");
             jogador.setMotivacao(jogador.getMotivacao() + 20);
+            msg += "✅ Semestre concluído! Progresso total: " + jogador.getProgresso() + "%";
         } else {
-            System.out.println("Você reprovou no semestre.");
             jogador.setSaude(jogador.getSaude() - 30);
+            msg += "❌ Você reprovou no semestre.";
         }
 
         jogador.resetarSemestre();
+        return msg;
     }
 }
 

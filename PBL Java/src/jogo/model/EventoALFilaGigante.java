@@ -11,10 +11,12 @@ public class EventoALFilaGigante extends EventosAleatorios{
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setSaude(jogador.getSaude() - 5);
         jogador.setEnergia(jogador.getEnergia() - 10);
         jogador.setMotivacao(jogador.getMotivacao() - 15);
+
+        return getMensagem();
     }
 
     @Override

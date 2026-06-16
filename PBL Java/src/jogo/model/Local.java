@@ -12,7 +12,7 @@ public abstract class Local {
     }
 
     // Método que cada local implementa do seu jeito
-    public abstract void eventoAoEntrar(Jogador jogador);
+    public abstract String eventoAoEntrar(Jogador jogador);
 
     public void adicionarNPC(NPC npc) {
         personagensPresentes.add(npc);

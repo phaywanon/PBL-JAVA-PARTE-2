@@ -6,10 +6,10 @@ public class EventoOBFormatura extends EventosObrigatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         if (jogador.getProgresso() >= 100){
-            System.out.println("PARABÉNS! VOCÊ É O MAIS NOVO FORMANDO EM ENGENHARIA DE COMPUTAÇÃO DA UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA!");
             jogador.setFormado(true);
         }
+        return "PARABÉNS! VOCÊ É O MAIS NOVO FORMANDO EM ENGENHARIA DE COMPUTAÇÃO DA UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA!";
     }
 }

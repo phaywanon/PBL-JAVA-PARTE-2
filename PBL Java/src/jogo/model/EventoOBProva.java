@@ -9,27 +9,20 @@ public class EventoOBProva extends EventosObrigatorios {
     }
 
     @Override
-    public void aplicarEvento (Jogador jogador){
-        System.out.println("📝 Prova nível " + nivelProva + " acontecendo!");
+    public String aplicarEvento(Jogador jogador) {
+        String msg = "📝 Prova nível " + nivelProva + " acontecendo!\n";
 
-        if ((!jogador.isFoiParaSalaHoje())){
-            System.out.println("⛔ Você perdeu a prova por não estar na sala!");
-
-            jogador.adicionarNota(0); // zerou
+        if (!jogador.isFoiParaSalaHoje()) {
+            jogador.adicionarNota(0);
             jogador.setMotivacao(jogador.getMotivacao() - 15);
             jogador.setSaude(jogador.getSaude() - 10);
-
-            return;
+            return msg + "⛔ Você perdeu a prova por não estar na sala!";
         }
 
-        // conhecimentoSemestre tem teto de 100 pontos
-        double baseEsforco = Math.min(jogador.getConhecimentoSemestre(), 100);
-        // nivelDeConhecimento vai de 0 a 110, normaliza pra 0-2 (bônus)
+        double baseEsforco     = Math.min(jogador.getConhecimentoSemestre(), 100);
         double baseConhecimento = (jogador.getNivelDeConhecimento() / 110.0) * 2;
-
-        // nota final de 0 a 10, com 2 casas decimais
-        double notaBruta = (baseEsforco / 100.0) * 8 + baseConhecimento;
-        double nota = Math.min(Math.round(notaBruta * 100.0) / 100.0, 10.0);
+        double notaBruta        = (baseEsforco / 100.0) * 8 + baseConhecimento;
+        double nota             = Math.min(Math.round(notaBruta * 100.0) / 100.0, 10.0);
 
         jogador.adicionarNota(nota);
 
@@ -40,17 +33,18 @@ public class EventoOBProva extends EventosObrigatorios {
             default -> 5.0;
         };
 
-        System.out.println("==========================================");
-        System.out.printf("Nota: %.2f | Requisito: %.1f%n", nota, requisito);
+        msg += String.format("Nota: %.2f | Requisito: %.1f\n", nota, requisito);
 
         if (nota >= requisito) {
-            System.out.println("✅ Aprovado!");
             jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() + 5);
             jogador.setMotivacao(jogador.getMotivacao() + 5);
+            msg += "✅ Aprovado!";
         } else {
-            System.out.println("❌ Reprovado.");
             jogador.setSaude(jogador.getSaude() - 5);
             jogador.setMotivacao(jogador.getMotivacao() - 10);
+            msg += "❌ Reprovado.";
         }
+
+        return msg;
     }
 }

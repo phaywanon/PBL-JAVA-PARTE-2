@@ -6,10 +6,12 @@ public class EventoALDoente extends EventosAleatorios{
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setSaude(jogador.getSaude() - 20);
         jogador.setEnergia(jogador.getEnergia() - 10);
         jogador.setMotivacao(jogador.getMotivacao() - 10);
+
+        return getMensagem();
     }
 
     @Override

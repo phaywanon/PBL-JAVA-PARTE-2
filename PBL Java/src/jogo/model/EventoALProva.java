@@ -21,22 +21,14 @@ public class EventoALProva extends EventosAleatorios {
 
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
-
+    public String aplicarEvento(Jogador jogador) {
         double baseEsforco = Math.min(jogador.getConhecimentoSemestre(), 100);
-
-        double baseConhecimento =
-                (jogador.getNivelDeConhecimento() / 110.0) * 2;
-
-        // fator aleatório (-1 até +1)
+        double baseConhecimento = (jogador.getNivelDeConhecimento() / 110.0) * 2;
         variacao = (random.nextDouble() * 2) - 1;
 
         double notaBruta = (baseEsforco / 100.0) * 8 + baseConhecimento;
         nota = Math.min(Math.round(notaBruta * 100.0) / 100.0, 10.0);
-
-        if (nota < 0) {
-            nota = 0;
-        }
+        if (nota < 0) nota = 0;
 
         jogador.adicionarNota(nota);
 
@@ -50,12 +42,14 @@ public class EventoALProva extends EventosAleatorios {
         aprovado = nota >= requisito;
 
         if (aprovado) {
-            jogador.setDesempenhoAcademico( jogador.getDesempenhoAcademico() + 5);
-            jogador.setMotivacao( jogador.getMotivacao() + 5);
+            jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() + 5);
+            jogador.setMotivacao(jogador.getMotivacao() + 5);
         } else {
-            jogador.setSaude( jogador.getSaude() - 5);
-            jogador.setMotivacao( jogador.getMotivacao() - 10);
+            jogador.setSaude(jogador.getSaude() - 5);
+            jogador.setMotivacao(jogador.getMotivacao() - 10);
         }
+
+        return getMensagem(); // ← usa o texto que já existia
     }
 
     @Override

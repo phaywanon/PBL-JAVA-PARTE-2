@@ -7,7 +7,7 @@ public class LocalSalaDeAula extends Local{
     }
 
     @Override
-    public void eventoAoEntrar(Jogador jogador){
-        System.out.println("Você chegou na sala de aula. O professor está esperando em frente ao quadro.");
+    public String eventoAoEntrar(Jogador jogador){
+        return "Você chegou na sala de aula. O professor está esperando em frente ao quadro.";
     }
 }

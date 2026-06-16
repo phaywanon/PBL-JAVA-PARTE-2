@@ -8,7 +8,7 @@ public abstract class NPC extends Personagem {
         this.tipo = tipo;
     }
 
-    public abstract void interagir(Jogador jogador);
+    public abstract String interagir(Jogador jogador);
 
     public String getTipo() { return tipo; }
 }

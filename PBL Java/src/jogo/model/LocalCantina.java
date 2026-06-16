@@ -7,8 +7,7 @@ public class LocalCantina extends Local{
     }
 
     @Override
-    public void eventoAoEntrar(Jogador jogador){
-        System.out.println("Você está na cantina. Um grupo de colegas seus estão estudando e conversando nas mesas. Deseja se aproximar deles?" +
-                "\nNa cantina, você também pode comprar lanches para se revigorar. Um lanche custa 5 reais.");
+    public String eventoAoEntrar(Jogador jogador){
+        return "Você está na cantina. Um grupo de colegas seus estão estudando e conversando nas mesas. Deseja se aproximar deles?\nNa cantina, você também pode comprar lanches para se revigorar. Um lanche custa 5 reais.";
     }
 }

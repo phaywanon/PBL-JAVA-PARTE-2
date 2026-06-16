@@ -6,8 +6,10 @@ public class EventoALPerdeuDinheiro extends EventosAleatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setDinheiro(jogador.getDinheiro() - 10);
+
+        return getMensagem();
     }
 
     public String getMensagem() {

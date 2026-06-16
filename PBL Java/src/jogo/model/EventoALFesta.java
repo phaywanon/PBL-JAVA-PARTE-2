@@ -12,9 +12,11 @@ public class EventoALFesta extends EventosAleatorios{
 
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setMotivacao(jogador.getMotivacao() + 20);
         jogador.setEnergia(jogador.getEnergia() - 10);
+
+        return getMensagem();
     }
 
     public String getMensagem() {

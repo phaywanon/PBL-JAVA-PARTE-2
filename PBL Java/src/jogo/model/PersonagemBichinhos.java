@@ -6,8 +6,9 @@ public class PersonagemBichinhos extends NPC {
     }
 
     @Override
-    public void interagir(Jogador jogador) {
+    public String interagir(Jogador jogador) {
         jogador.setMotivacao(jogador.getMotivacao() + 5);
         jogador.setEnergia(jogador.getEnergia() - 1);
+        return "Você fez carinho num bichinho do campus e se sentiu mais animado! 🐱";
     }
 }

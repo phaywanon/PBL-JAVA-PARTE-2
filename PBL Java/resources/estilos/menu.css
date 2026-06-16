@@ -1,0 +1,74 @@
+.fundo-menu {
+    -fx-background-color: #1a1a2e;
+}
+
+.titulo {
+    -fx-font-size: 64px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e2b96f;
+    -fx-padding: 0 0 40 0;
+}
+
+.titulo-slots {
+    -fx-font-size: 28px;
+    -fx-text-fill: #e2b96f;
+    -fx-padding: 0 0 20 0;
+}
+
+.button {
+    -fx-font-size: 18px;
+    -fx-min-width: 280px;
+    -fx-min-height: 50px;
+    -fx-background-color: #16213e;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #e2b96f;
+    -fx-text-fill: #1a1a2e;
+}
+
+.botao-sair {
+    -fx-font-size: 14px;
+    -fx-min-width: 140px;
+    -fx-min-height: 36px;
+    -fx-background-color: transparent;
+    -fx-text-fill: #888888;
+    -fx-border-color: #444444;
+    -fx-border-width: 1px;
+    -fx-margin-top: 20px;
+}
+
+.botao-sair:hover {
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #ffffff;
+    -fx-background-color: transparent;
+}
+
+
+.label-campo {
+    -fx-font-size: 16px;
+    -fx-text-fill: #cccccc;
+}
+
+.label-erro {
+    -fx-font-size: 14px;
+    -fx-text-fill: #ff6b6b;
+    -fx-min-height: 20px;
+}
+
+.text-field {
+    -fx-font-size: 16px;
+    -fx-background-color: #16213e;
+    -fx-text-fill: #ffffff;
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 1px;
+    -fx-padding: 8px;
+}
+
+.text-field:focused {
+    -fx-border-color: #ffffff;
+}

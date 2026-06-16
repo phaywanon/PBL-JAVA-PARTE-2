@@ -6,8 +6,8 @@ public class LocalCasa extends Local{
     }
 
     @Override
-    public void eventoAoEntrar(Jogador jogador){
-        System.out.println("Você chegou em casa. Descanse para revigorar suas energias!");
+    public String eventoAoEntrar(Jogador jogador){
+        return "Você chegou em casa. Descanse para revigorar suas energias!";
     }
 
 }

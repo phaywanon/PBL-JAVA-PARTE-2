@@ -6,7 +6,7 @@ public class LocalDA extends Local{
     }
 
     @Override
-    public void eventoAoEntrar(Jogador jogador){
-        System.out.println("Você chegou no DA de ECOMP! Aproveite para descansar um pouco.");
+    public String eventoAoEntrar(Jogador jogador){
+        return "Você chegou no DA de ECOMP! Aproveite para descansar um pouco.";
     }
 }

@@ -6,10 +6,9 @@ public class PersonagemProfessor extends NPC {
     }
 
     @Override
-    public void interagir(Jogador jogador){
-        System.out.println("Você tirou dúvidas com a Professora!");
+    public String interagir(Jogador jogador){
         jogador.setNivelDeConhecimento(jogador.getNivelDeConhecimento() + 3);
         jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() + 2);
-
+        return "Você tirou dúvidas com a Professora!";
     }
 }

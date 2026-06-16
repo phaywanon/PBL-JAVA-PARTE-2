@@ -11,8 +11,10 @@ public class EventoALGanhouDinheiro extends EventosAleatorios {
     }
 
     @Override
-    public void aplicarEvento(Jogador jogador) {
+    public String aplicarEvento(Jogador jogador) {
         jogador.setDinheiro(jogador.getDinheiro() + 20);
+
+        return getMensagem();
     }
 
     @Override

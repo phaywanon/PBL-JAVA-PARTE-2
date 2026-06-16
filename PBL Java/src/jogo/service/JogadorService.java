@@ -10,128 +10,124 @@ public class JogadorService{
     }
 
     // Métodos do Jogador
-    public void estudar() {
+    public String estudar() {
         if (jogador.getMotivacao() < 10) {
-            System.out.println("Você está muito desmotivado para estudar!");
-            return;
+            return "Você está muito desmotivado para estudar!";
         }
         if (jogador.getEnergia() < 10) {
-            System.out.println("Você está cansado demais para estudar!");
-            return;
+            return "Você está cansado demais para estudar!";
         }
-        if (jogador.getMotivacao() >= 10) {
-            jogador.setNivelDeConhecimento(jogador.getNivelDeConhecimento() + 0.5);
-            jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 5);
-            jogador.setEnergia(jogador.getEnergia() - 3);
-            jogador.setMotivacao(jogador.getMotivacao() - 2);
-        } else {
-            System.out.println("Você está muito desmotivado para estudar. Não vai conseguir absorver nada dessa maneira!");
-        }
+
+        jogador.setNivelDeConhecimento(jogador.getNivelDeConhecimento() + 0.5);
+        jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 5);
+        jogador.setEnergia(jogador.getEnergia() - 3);
+        jogador.setMotivacao(jogador.getMotivacao() - 2);
+
+        return "Você estudou e absorveu bastante conteúdo!";
     }
 
-    public void lanchar(Mapa mapa) {
+
+    public String lanchar(Mapa mapa) {
         if (!(jogador.getLocal() instanceof LocalCantina)) {
-            System.out.println("Você precisa estar na cantina para comprar um lanche!");
-            return;
+            return "Você precisa estar na cantina para comprar um lanche!";
         }
         if (jogador.getDinheiro() >= 5) {
             jogador.setDinheiro(jogador.getDinheiro() - 5);
             jogador.setEnergia(jogador.getEnergia() + 3);
             jogador.setMotivacao(jogador.getMotivacao() + 3);
-            System.out.println("Você comprou um lanche e está levemente revigorado!");
+            return "Você comprou um lanche e está levemente revigorado!";
         } else {
-            System.out.println("Dinheiro insuficiente!");
+            return "Dinheiro insuficiente!";
         }
 
     }
 
 
-    public boolean irParaCasa(Mapa mapa) {
+    public String irParaCasa(Mapa mapa) {
         if (jogador.getLocal() instanceof LocalCasa) {
-            System.out.println("Você já está em casa!");
-            return false;
+            return "Você já está em casa!" ;
         }
+
+        String msg = "";
+
         jogador.mudarLocal(mapa.getPontoDeOnibus());
+
         if (jogador.getDinheiro() >= 3) {
             jogador.setDinheiro(jogador.getDinheiro() - 3);
-            System.out.println("Você pegou o ônibus e chegou em casa.");
+            msg += "Você pegou o ônibus e chegou em casa.\n";
         } else {
-            System.out.println("Você está sem dinheiro e vai precisar ir andando pra casa.");
+            msg +="Você está sem dinheiro e vai precisar ir andando pra casa.\n";
             jogador.setEnergia(jogador.getEnergia() - 15);
         }
         jogador.mudarLocal(mapa.getCasa());
         jogador.setEnergia(90);
         jogador.setSaude(Math.min(jogador.getSaude() + 15, 100));
-        System.out.println("Você dormiu, descansou e acordou mais disposto!");
+        msg += "\nVocê dormiu, descansou e acordou mais disposto!";
 
-        return true;
+        return msg;
     }
 
 
-    public void irParaUEFS(Mapa mapa) {
+    public String irParaUEFS(Mapa mapa) {
         if (!(jogador.getLocal() instanceof LocalCasa)) {
-            System.out.println("Você já está na UEFS!");
-            return;
+            return "Você já está na UEFS!";
         }
         if (jogador.getDinheiro() >= 3) {
             jogador.setDinheiro(jogador.getDinheiro() - 3);
             jogador.mudarLocal(mapa.getPontoDeOnibus());
-            System.out.println("Você chegou na UEFS!");
+            return "Você chegou na UEFS!";
         } else {
-            System.out.println("Sem dinheiro pra passagem! Vai andando...");
             jogador.setEnergia(jogador.getEnergia() - 15);
             jogador.mudarLocal(mapa.getPontoDeOnibus());
+            return "Sem dinheiro pra passagem! Vai andando...";
         }
     }
 
-    public void cursarDisciplina() {
+    public String cursarDisciplina() {
         if (!(jogador.getLocal() instanceof LocalSalaDeAula) &&
                 !(jogador.getLocal() instanceof LocalLaboratorio)) {
-            System.out.println("Você precisa estar na sala de aula ou no laboratório!");
-            return;
+            return "Você precisa estar na sala de aula ou no laboratório!";
         }
         if (jogador.getEnergia() >= 20) {
             jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 15);
             jogador.setEnergia(jogador.getEnergia() - 20);
-            System.out.println("Você assistiu à aula e aprendeu bastante!");
+            return "Você assistiu à aula e aprendeu bastante!";
         } else {
-            System.out.println("Você está cansado demais para assistir aula!");
+            return "Você está cansado demais para assistir aula!";
         }
     }
 
-    public void lazer() {
+    public String lazer() {
         if (!(jogador.getLocal() instanceof LocalDA)) {
-            System.out.println("Você precisa estar no DA de ECOMP para se divertir!");
-            return;
+            return "Você precisa estar no DA de ECOMP para se divertir!";
         }
         if (jogador.getDinheiro() >= 1) {
             jogador.setMotivacao(jogador.getMotivacao() + 10);
             jogador.setEnergia(jogador.getEnergia() + 5);
             jogador.setDinheiro(jogador.getDinheiro() - 1);
-            System.out.println("Você jogou um dominó apostado no DA de ECOMP e conseguiu relaxar um pouco com as resenhas e risadas! (Apesar de ter perdido dinheiro kkkkk");
+            return "Você jogou um dominó apostado no DA de ECOMP e conseguiu relaxar um pouco com as resenhas e risadas! (Apesar de ter perdido dinheiro kkkkk)";
         } else {
-            System.out.println("Se divertir custa dinheiro e você está com a conta zerada! Volte depois.");
+            return "Se divertir custa dinheiro e você está com a conta zerada! Volte depois.";
         }
 
     }
 
 
-    public void interagirComNPC(NPC npc) {
-        npc.interagir(jogador);
+    public String interagirComNPC(NPC npc) {
+        return npc.interagir(jogador);
     }
 
-    public void trabalhar() {
+    public String trabalhar() {
         if (!(jogador.getLocal() instanceof LocalLaboratorio)) {
-            System.out.println("Você precisa estar no laboratório para trabalhar!");
-            return;
+            return "Você precisa estar no laboratório para trabalhar!";
         }
         if (jogador.getEnergia() >= 20) {
             jogador.setDinheiro(jogador.getDinheiro() + 20);
             jogador.setEnergia(jogador.getEnergia() - 20);
             jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 5);
-            System.out.println("Você fez uma monitoria e ganhou 20 reais!");
+            return "Você fez uma monitoria e ganhou 20 reais!";
         } else {
-            System.out.println("Você está cansado demais para trabalhar.");
+            return "Você está cansado demais para trabalhar.";
         }
     }
 

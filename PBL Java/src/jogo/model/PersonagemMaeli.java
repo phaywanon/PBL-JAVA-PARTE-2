@@ -7,8 +7,8 @@ public class PersonagemMaeli extends NPC {
     }
 
     @Override
-    public void interagir(Jogador jogador) {
-        System.out.println("Maeli: 'O Colegiado está aberto! Gostaria de alguma ajuda?");
+    public String interagir(Jogador jogador) {
         jogador.setDesempenhoAcademico(jogador.getDesempenhoAcademico() + 2);
+        return "Maeli: 'O Colegiado está aberto! Gostaria de alguma ajuda?";
     }
 }
