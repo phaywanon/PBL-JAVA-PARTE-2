@@ -26,6 +26,9 @@ public class TelaSlots {
 
         JogoService service = SceneManager.getJogoService();
 
+        Label aviso = new Label("");
+        aviso.getStyleClass().add("label-erro");
+
         Button[] botoes = new Button[3];
         for (int i = 1; i <= 3; i++) {
             String slot = "slot" + i;
@@ -44,7 +47,7 @@ public class TelaSlots {
             final int numeroSlot = i;
             final EstadoDoJogo estadoFinal = estado;
 
-            btn.setOnAction(e -> executarAcaoSlot(modo, slot, numeroSlot, estadoFinal));
+            btn.setOnAction(e -> executarAcaoSlot(modo, slot, numeroSlot, estadoFinal, aviso));
             botoes[i - 1] = btn;
         }
 
@@ -53,7 +56,7 @@ public class TelaSlots {
         voltar.setOnAction(e -> SceneManager.irPara(telaOrigem));
 
         VBox coluna = new VBox(20, titulo,
-                botoes[0], botoes[1], botoes[2], voltar);
+                botoes[0], botoes[1], botoes[2], aviso, voltar);
         coluna.setAlignment(Pos.CENTER);
 
         StackPane raiz = new StackPane(coluna);
@@ -68,31 +71,38 @@ public class TelaSlots {
     }
 
     private static void executarAcaoSlot(String modo, String slot,
-                                         int numero, EstadoDoJogo estado) {
+                                         int numero, EstadoDoJogo estado,
+                                         Label aviso) {
         JogoService service = SceneManager.getJogoService();
 
         switch (modo) {
             case "novo" -> {
                 if (estado != null) {
-                    System.out.println("Slot ocupado! Delete antes.");
+                    aviso.setText("❌ Slot ocupado! Delete antes de criar um novo jogo.");
                     return;
                 }
-                // Por enquanto abre um diálogo simples — depois vira tela própria
                 SceneManager.irPara("novo-jogo-" + slot);
             }
+
             case "continuar" -> {
                 if (estado == null) {
-                    System.out.println("Slot vazio!");
+                    aviso.setText("⚠️ Slot vazio! Escolha um save existente.");
                     return;
                 }
                 service.carregarJogo(slot);
-                SceneManager.irPara("jogo"); // tela do jogo — vem depois
-                TelaJogo.atualizar();
+                SceneManager.irPara("jogo");
             }
+
             case "deletar" -> {
+                if (estado == null) {
+                    aviso.setText("⚠️ Esse slot já está vazio.");
+                    return;
+                }
+
                 service.deletarJogo(slot);
-                System.out.println("Save deletado!");
-                SceneManager.irPara("menu");
+                aviso.setText("🗑️ Save deletado!");
+
+                SceneManager.irPara("slots-deletar");
             }
         }
     }
