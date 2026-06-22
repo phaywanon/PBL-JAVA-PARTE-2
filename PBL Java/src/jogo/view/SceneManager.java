@@ -27,7 +27,6 @@ public class SceneManager {
         telas.put("novo-jogo-slot1", TelaNomeJogador.criar("slot1"));
         telas.put("novo-jogo-slot2", TelaNomeJogador.criar("slot2"));
         telas.put("novo-jogo-slot3", TelaNomeJogador.criar("slot3"));
-        telas.put("jogo",            TelaJogo.criar());
         telas.put("explorar", TelaExplorar.criar());
 
     }
@@ -42,6 +41,7 @@ public class SceneManager {
             case "slots-deletar"   -> TelaSlots.criar("deletar",   "menu");
             case "npc" -> TelaNPC.criar();
             case "formatura" -> TelaFormatura.criar();
+            case "jogo"            -> TelaJogo.criar();
             default                -> telas.get(nomeTela);
         };
 

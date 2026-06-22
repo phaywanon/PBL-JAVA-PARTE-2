@@ -1,0 +1,63 @@
+.fundo-jogo {
+    -fx-background-color: #1a1a2e;
+}
+
+.painel-topo {
+    -fx-background-color: #16213e;
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 0 0 2 0;
+}
+
+.painel-botoes {
+    -fx-background-color: #16213e;
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 0 0 0 2;
+}
+
+.painel-centro {
+    -fx-background-color: #0f3460;
+}
+
+.painel-rodape {
+    -fx-background-color: #16213e;
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 2 0 0 0;
+}
+
+.status-local {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e2b96f;
+}
+
+.status-item {
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+}
+
+.label-log {
+    -fx-font-size: 14px;
+    -fx-text-fill: #aaffaa;
+}
+
+
+.popup-titulo {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e2b96f;
+}
+
+.popup-mensagem {
+    -fx-font-size: 16px;
+    -fx-text-fill: #ffffff;
+    -fx-text-alignment: center;
+}
+
+.caixa-popup {
+    -fx-background-color: #16213e;
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 3px;
+    -fx-padding: 40px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+}
