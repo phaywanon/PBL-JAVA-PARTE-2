@@ -9,9 +9,12 @@ import javafx.scene.layout.*;
 import jogo.controller.AcaoDisponivel;
 import jogo.controller.JogoSceneController;
 import jogo.view.SceneManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class TelaJogo {
 
+    private static ImageView fundoLocal;
     private static Label labelLocal    = new Label();
     private static Label labelEnergia  = new Label();
     private static Label labelDinheiro = new Label();
@@ -42,6 +45,13 @@ public class TelaJogo {
 
         StackPane centro = new StackPane();
         centro.getStyleClass().add("painel-centro");
+
+        fundoLocal = new ImageView();
+        fundoLocal.setFitWidth(900);
+        fundoLocal.setFitHeight(520);
+        fundoLocal.setPreserveRatio(false);
+
+        centro.getChildren().add(fundoLocal);
 
         labelLog.getStyleClass().add("label-log");
         labelLog.setWrapText(true);
@@ -76,17 +86,12 @@ public class TelaJogo {
             return;
         }
 
-        var jogador = SceneManager.getJogoService().getJogador();
-        var service = SceneManager.getJogoService();
+        atualizarFundo();
 
-        int dia = service.getDiaAtual();
-        int diaDoSemestre = (dia - 1) % 21 + 1;
-        int semestre = ((dia - 1) / 21) + 1;
-
-        labelLocal.setText("📍 " + jogador.getLocal().getNomeLocal());
-        labelDia.setText("📅 Dia " + diaDoSemestre + "/21  |  Sem. " + semestre);
-        labelEnergia.setText("⚡ " + jogador.getEnergia());
-        labelDinheiro.setText("💰 R$" + String.format("%.0f", jogador.getDinheiro()));
+        labelLocal.setText("📍 " + controller.getNomeLocalAtual());
+        labelDia.setText("📅 Dia " + controller.getDiaDoSemestre() + "/21  |  Sem. " + controller.getSemestre());
+        labelEnergia.setText("⚡ " + controller.getEnergia());
+        labelDinheiro.setText("💰 R$" + String.format("%.0f", controller.getDinheiro()));
 
         atualizarBotoes();
 
@@ -109,12 +114,19 @@ public class TelaJogo {
             painelBotoes.getChildren().add(btn);
         }
 
+        if (controller.podeExplorar()) {
+            painelBotoes.getChildren().add(
+                    botao("🗺️ Explorar", () -> SceneManager.irPara("explorar"))
+            );
+        }
+
         // ações fixas que não dependem de regra de negócio
         painelBotoes.getChildren().add(
-                botao("🗺️ Explorar", () -> SceneManager.irPara("explorar"))
-        );
-        painelBotoes.getChildren().add(
                 botao("👤 Interagir com NPC", () -> SceneManager.irPara("npc"))
+        );
+
+        painelBotoes.getChildren().add(
+                botao("📊 Ver status", () -> log(controller.statusCompleto()))
         );
 
         Button sair = botao("🚪 Sair para o menu", SceneManager::voltarAoMenu);
@@ -156,5 +168,18 @@ public class TelaJogo {
 
         painelPopup.getChildren().add(caixa);
         painelPopup.setVisible(true);
+    }
+
+    private static void atualizarFundo() {
+        String caminho = controller.getCaminhoImagemLocalAtual();
+
+        var url = TelaJogo.class.getResource(caminho);
+
+        if (url == null) {
+            System.err.println("Imagem não encontrada: " + caminho);
+            return;
+        }
+
+        fundoLocal.setImage(new Image(url.toExternalForm()));
     }
 }

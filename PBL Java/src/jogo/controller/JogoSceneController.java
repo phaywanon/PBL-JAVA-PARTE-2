@@ -27,7 +27,6 @@ public class JogoSceneController {
     private List<AcaoDisponivel> acoesCasa() {
         List<AcaoDisponivel> acoes = new ArrayList<>();
         acoes.add(new AcaoDisponivel("🚌 Ir para a UEFS", jogoService::irParaUEFS));
-        acoes.add(new AcaoDisponivel("📊 Ver status", this::statusCompleto));
         return acoes;
     }
 
@@ -66,6 +65,11 @@ public class JogoSceneController {
         return acoes;
     }
 
+    public boolean podeExplorar() {
+        return !(jogoService.getJogador().getLocal() instanceof LocalCasa)
+                && !(jogoService.getJogador().getLocal() instanceof LocalPontoDeOnibus);
+    }
+
     // ===== Decisões de estado do jogo =====
 
     public boolean jogadorSeFormou() {
@@ -86,5 +90,42 @@ public class JogoSceneController {
         return String.format("⚡%d  ❤️%d  💡%d  📚%.1f  💰R$%.0f  🎓%.0f%%",
                 j.getEnergia(), j.getSaude(), j.getMotivacao(),
                 j.getNivelDeConhecimento(), j.getDinheiro(), j.getProgresso());
+    }
+
+    public String getNomeLocalAtual() {
+        return jogoService.getJogador().getLocal().getNomeLocal();
+    }
+
+    public String getCaminhoImagemLocalAtual() {
+        String nomeLocal = getNomeLocalAtual();
+
+        return switch (nomeLocal) {
+            case "Casa" -> "/imagens/CasaGPT.png";
+            case "Ponto de ônibus da UEFS" -> "/imagens/PontoDeOnibusGPT.png";
+            case "Cantina" -> "/imagens/CantinaGPT.png";
+            case "Sala de Aula" -> "/imagens/SalaDeAulaGPT.png";
+            case "Laboratório" -> "/imagens/LaboratorioGPT.png";
+            case "Colegiado de ECOMP" -> "/imagens/ColegiadoGPT.png";
+            case "DA de ECOMP" -> "/imagens/DiretorioAcademicoGPT.png";
+            default -> "/imagens/CasaGPT.png";
+        };
+    }
+
+    public int getDiaDoSemestre() {
+        int dia = jogoService.getDiaAtual();
+        return (dia - 1) % 21 + 1;
+    }
+
+    public int getSemestre() {
+        int dia = jogoService.getDiaAtual();
+        return ((dia - 1) / 21) + 1;
+    }
+
+    public int getEnergia() {
+        return jogoService.getJogador().getEnergia();
+    }
+
+    public double getDinheiro() {
+        return jogoService.getJogador().getDinheiro();
     }
 }
