@@ -23,6 +23,7 @@ public class TelaJogo {
     private static VBox painelBotoes = new VBox(12);
     private static StackPane painelPopup = new StackPane();
 
+    private static Pane camadaNPCs;
     private static ImageView spriteGato;
     private static ImageView spriteCachorro;
 
@@ -54,6 +55,11 @@ public class TelaJogo {
         fundoLocal.setFitHeight(520);
         fundoLocal.setPreserveRatio(false);
 
+        camadaNPCs = new Pane();
+        camadaNPCs.setPrefSize(900, 520);
+        camadaNPCs.setPickOnBounds(false);
+
+
         spriteGato = new ImageView(
                 new Image(TelaJogo.class.getResource("/imagens/GatinhoGPT.png").toExternalForm())
         );
@@ -62,19 +68,19 @@ public class TelaJogo {
                 new Image(TelaJogo.class.getResource("/imagens/CachorrinhoGPT.png").toExternalForm())
         );
 
-        spriteGato.setFitWidth(70);
+        spriteGato.setFitWidth(60);
         spriteGato.setPreserveRatio(true);
+        spriteGato.setLayoutX(560);
+        spriteGato.setLayoutY(300);
 
         spriteCachorro.setFitWidth(90);
         spriteCachorro.setPreserveRatio(true);
+        spriteCachorro.setLayoutX(420);
+        spriteCachorro.setLayoutY(250);
 
-        spriteGato.setTranslateX(-280);
-        spriteGato.setTranslateY(50);
+        camadaNPCs.getChildren().addAll(spriteGato, spriteCachorro);
 
-        spriteCachorro.setTranslateX(-10);
-        spriteCachorro.setTranslateY(9);
-
-        centro.getChildren().addAll(fundoLocal, spriteGato, spriteCachorro);
+        centro.getChildren().addAll(fundoLocal, camadaNPCs);
 
         labelLog.getStyleClass().add("label-log");
         labelLog.setWrapText(true);
