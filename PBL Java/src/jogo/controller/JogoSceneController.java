@@ -102,11 +102,11 @@ public class JogoSceneController {
         return switch (nomeLocal) {
             case "Casa" -> "/imagens/CasaGPT.png";
             case "Ponto de ônibus da UEFS" -> "/imagens/PontoDeOnibusGPT.png";
-            case "Cantina" -> "/imagens/CantinaGPT.png";
-            case "Sala de Aula" -> "/imagens/SalaDeAulaGPT.png";
-            case "Laboratório" -> "/imagens/LaboratorioGPT.png";
-            case "Colegiado de ECOMP" -> "/imagens/ColegiadoGPT.png";
-            case "DA de ECOMP" -> "/imagens/DiretorioAcademicoGPT.png";
+            case "Cantina" -> "/imagens/CantinaColegasGPT.png";
+            case "Sala de Aula" -> "/imagens/SalaDeAulaProfessoraGPT.png";
+            case "Laboratório" -> "/imagens/LaboratorioProfessorGPT.png";
+            case "Colegiado de ECOMP" -> "/imagens/ColegiadoMaeliGPT.png";
+            case "DA de ECOMP" -> "/imagens/DAColegasGPT.png";
             default -> "/imagens/CasaGPT.png";
         };
     }

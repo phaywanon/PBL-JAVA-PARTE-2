@@ -26,6 +26,7 @@ public class TelaJogo {
     private static Pane camadaNPCs;
     private static ImageView spriteGato;
     private static ImageView spriteCachorro;
+    private static ImageView spriteMaeli;
 
     private static JogoSceneController controller;
 
@@ -75,8 +76,8 @@ public class TelaJogo {
 
         spriteCachorro.setFitWidth(90);
         spriteCachorro.setPreserveRatio(true);
-        spriteCachorro.setLayoutX(420);
-        spriteCachorro.setLayoutY(250);
+        spriteCachorro.setLayoutX(435);
+        spriteCachorro.setLayoutY(220);
 
         camadaNPCs.getChildren().addAll(spriteGato, spriteCachorro);
 
@@ -214,9 +215,8 @@ public class TelaJogo {
     }
 
     private static void atualizarNPCs() {
-        boolean noPonto =
-                controller.getNomeLocalAtual()
-                        .equals("Ponto de ônibus da UEFS");
+        boolean noPonto = controller.getNomeLocalAtual().equals("Ponto de ônibus da UEFS");
+        boolean noColegiado = controller.getNomeLocalAtual().equals("Colegiado de ECOMP");
 
         spriteGato.setVisible(noPonto);
         spriteCachorro.setVisible(noPonto);
