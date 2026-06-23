@@ -15,13 +15,16 @@ import javafx.scene.image.ImageView;
 public class TelaJogo {
 
     private static ImageView fundoLocal;
-    private static Label labelLocal    = new Label();
-    private static Label labelEnergia  = new Label();
+    private static Label labelLocal = new Label();
+    private static Label labelEnergia = new Label();
     private static Label labelDinheiro = new Label();
-    private static Label labelDia      = new Label();
-    private static Label labelLog      = new Label();
-    private static VBox painelBotoes   = new VBox(12);
+    private static Label labelDia = new Label();
+    private static Label labelLog = new Label();
+    private static VBox painelBotoes = new VBox(12);
     private static StackPane painelPopup = new StackPane();
+
+    private static ImageView spriteGato;
+    private static ImageView spriteCachorro;
 
     private static JogoSceneController controller;
 
@@ -51,7 +54,27 @@ public class TelaJogo {
         fundoLocal.setFitHeight(520);
         fundoLocal.setPreserveRatio(false);
 
-        centro.getChildren().add(fundoLocal);
+        spriteGato = new ImageView(
+                new Image(TelaJogo.class.getResource("/imagens/GatinhoGPT.png").toExternalForm())
+        );
+
+        spriteCachorro = new ImageView(
+                new Image(TelaJogo.class.getResource("/imagens/CachorrinhoGPT.png").toExternalForm())
+        );
+
+        spriteGato.setFitWidth(70);
+        spriteGato.setPreserveRatio(true);
+
+        spriteCachorro.setFitWidth(90);
+        spriteCachorro.setPreserveRatio(true);
+
+        spriteGato.setTranslateX(-280);
+        spriteGato.setTranslateY(50);
+
+        spriteCachorro.setTranslateX(-10);
+        spriteCachorro.setTranslateY(9);
+
+        centro.getChildren().addAll(fundoLocal, spriteGato, spriteCachorro);
 
         labelLog.getStyleClass().add("label-log");
         labelLog.setWrapText(true);
@@ -87,6 +110,7 @@ public class TelaJogo {
         }
 
         atualizarFundo();
+        atualizarNPCs();
 
         labelLocal.setText("📍 " + controller.getNomeLocalAtual());
         labelDia.setText("📅 Dia " + controller.getDiaDoSemestre() + "/21  |  Sem. " + controller.getSemestre());
@@ -181,5 +205,14 @@ public class TelaJogo {
         }
 
         fundoLocal.setImage(new Image(url.toExternalForm()));
+    }
+
+    private static void atualizarNPCs() {
+        boolean noPonto =
+                controller.getNomeLocalAtual()
+                        .equals("Ponto de ônibus da UEFS");
+
+        spriteGato.setVisible(noPonto);
+        spriteCachorro.setVisible(noPonto);
     }
 }
