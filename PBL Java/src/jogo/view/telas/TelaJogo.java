@@ -24,9 +24,10 @@ public class TelaJogo {
     private static StackPane painelPopup = new StackPane();
 
     private static Pane camadaNPCs;
+    private static Pane camadaJogador;
     private static ImageView spriteGato;
     private static ImageView spriteCachorro;
-    private static ImageView spriteMaeli;
+    private static ImageView spriteJogador;
 
     private static JogoSceneController controller;
 
@@ -60,6 +61,10 @@ public class TelaJogo {
         camadaNPCs.setPrefSize(900, 520);
         camadaNPCs.setPickOnBounds(false);
 
+        camadaJogador = new Pane();
+        camadaJogador.setPrefSize(900, 520);
+        camadaJogador.setPickOnBounds(false);
+
 
         spriteGato = new ImageView(
                 new Image(TelaJogo.class.getResource("/imagens/GatinhoGPT.png").toExternalForm())
@@ -67,6 +72,10 @@ public class TelaJogo {
 
         spriteCachorro = new ImageView(
                 new Image(TelaJogo.class.getResource("/imagens/CachorrinhoGPT.png").toExternalForm())
+        );
+
+        spriteJogador = new ImageView(
+                new Image(TelaJogo.class.getResource("/imagens/JogadorGPT.png").toExternalForm())
         );
 
         spriteGato.setFitWidth(60);
@@ -77,11 +86,16 @@ public class TelaJogo {
         spriteCachorro.setFitWidth(90);
         spriteCachorro.setPreserveRatio(true);
         spriteCachorro.setLayoutX(435);
-        spriteCachorro.setLayoutY(220);
+        spriteCachorro.setLayoutY(230);
+
+        spriteJogador.setFitWidth(250);
+        spriteJogador.setPreserveRatio(true);
+
 
         camadaNPCs.getChildren().addAll(spriteGato, spriteCachorro);
+        camadaJogador.getChildren().add(spriteJogador);
 
-        centro.getChildren().addAll(fundoLocal, camadaNPCs);
+        centro.getChildren().addAll(fundoLocal, camadaNPCs, camadaJogador);
 
         labelLog.getStyleClass().add("label-log");
         labelLog.setWrapText(true);
@@ -118,6 +132,7 @@ public class TelaJogo {
 
         atualizarFundo();
         atualizarNPCs();
+        atualizarJogador();
 
         labelLocal.setText("📍 " + controller.getNomeLocalAtual());
         labelDia.setText("📅 Dia " + controller.getDiaDoSemestre() + "/21  |  Sem. " + controller.getSemestre());
@@ -216,9 +231,69 @@ public class TelaJogo {
 
     private static void atualizarNPCs() {
         boolean noPonto = controller.getNomeLocalAtual().equals("Ponto de ônibus da UEFS");
-        boolean noColegiado = controller.getNomeLocalAtual().equals("Colegiado de ECOMP");
 
         spriteGato.setVisible(noPonto);
         spriteCachorro.setVisible(noPonto);
+    }
+
+    private static void trocarSpriteJogador(String caminho, double largura) {
+        var url = TelaJogo.class.getResource(caminho);
+
+        if (url == null) {
+            System.err.println("Sprite do jogador não encontrado: " + caminho);
+            return;
+        }
+
+        spriteJogador.setImage(new Image(url.toExternalForm()));
+
+        spriteJogador.setFitWidth(largura);
+    }
+
+    private static void atualizarJogador() {
+        String local = controller.getNomeLocalAtual();
+
+        switch (local) {
+            case "Casa" -> {
+                trocarSpriteJogador("/imagens/JogadorMirrorGPT.png", 270);
+                spriteJogador.setLayoutX(250);
+                spriteJogador.setLayoutY(200);
+            }
+
+            case "Ponto de ônibus da UEFS" -> {
+                trocarSpriteJogador("/imagens/JogadorGPT.png", 270);
+                spriteJogador.setLayoutX(600);
+                spriteJogador.setLayoutY(250);
+            }
+
+            case "Cantina" -> {
+                trocarSpriteJogador("/imagens/JogadorDireitaGPT.png", 270);
+                spriteJogador.setLayoutX(300);
+                spriteJogador.setLayoutY(180);
+            }
+
+            case "Sala de Aula" -> {
+                trocarSpriteJogador("/imagens/JogadorEsquerdaGPT.png", 270);
+                spriteJogador.setLayoutX(720);
+                spriteJogador.setLayoutY(305);
+            }
+
+            case "Laboratório" -> {
+                trocarSpriteJogador("/imagens/JogadorNordesteGPT.png", 110);
+                spriteJogador.setLayoutX(560);
+                spriteJogador.setLayoutY(200);
+            }
+
+            case "Colegiado de ECOMP" -> {
+                trocarSpriteJogador("/imagens/JogadorCostasGPT.png", 300);
+                spriteJogador.setLayoutX(320);
+                spriteJogador.setLayoutY(180);
+            }
+
+            case "DA de ECOMP" -> {
+                trocarSpriteJogador("/imagens/JogadorNordesteGPT.png", 120);
+                spriteJogador.setLayoutX(320);
+                spriteJogador.setLayoutY(280);
+            }
+        }
     }
 }
