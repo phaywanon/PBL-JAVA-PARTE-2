@@ -7,14 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import jogo.view.SceneManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class MenuPrincipal {
 
     public static Scene criar() {
-        // Título
-        Label titulo = new Label("BixoQuest");
-        titulo.getStyleClass().add("titulo");
-
         // Botões principais
         Button btnNovo = new Button("Novo Jogo");
         Button btnContinuar = new Button("Continuar");
@@ -30,10 +28,23 @@ public class MenuPrincipal {
         btnSair.setOnAction(e -> System.exit(0));
 
         // Layout
-        VBox coluna = new VBox(20, titulo, btnNovo, btnContinuar, btnDeletar, btnSair);
+        VBox coluna = new VBox(15, btnNovo, btnContinuar, btnDeletar, btnSair);
         coluna.setAlignment(Pos.CENTER);
+        coluna.setTranslateY(120);
+        coluna.getStyleClass().add("menu-box");
 
-        StackPane raiz = new StackPane(coluna);
+        ImageView fundo = new ImageView(
+                new Image(
+                        MenuPrincipal.class.getResource("/imagens/TelaMenuGpt2.png").toExternalForm())
+        );
+
+        fundo.setFitWidth(1280);
+        fundo.setFitHeight(720);
+        fundo.setPreserveRatio(false);
+        fundo.setMouseTransparent(true);
+
+
+        StackPane raiz = new StackPane(fundo, coluna);
         raiz.getStyleClass().add("fundo-menu");
 
         Scene scene = new Scene(raiz, 1280, 720);

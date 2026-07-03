@@ -6,9 +6,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Region;
 import jogo.model.EstadoDoJogo;
 import jogo.service.JogoService;
 import jogo.view.SceneManager;
+
 
 public class TelaSlots {
 
@@ -55,11 +61,31 @@ public class TelaSlots {
         voltar.getStyleClass().add("botao-sair");
         voltar.setOnAction(e -> SceneManager.irPara(telaOrigem));
 
-        VBox coluna = new VBox(20, titulo,
+        VBox coluna = new VBox(18, titulo,
                 botoes[0], botoes[1], botoes[2], aviso, voltar);
-        coluna.setAlignment(Pos.CENTER);
 
-        StackPane raiz = new StackPane(coluna);
+        coluna.setAlignment(Pos.CENTER);
+        coluna.setTranslateY(90);
+        coluna.setMaxWidth(460);
+        coluna.setMaxHeight(Region.USE_PREF_SIZE);
+        coluna.getStyleClass().add("painel-slots");
+
+        ImageView fundo = new ImageView(
+                new Image(
+                        TelaSlots.class.getResource("/imagens/TelaMenuGpt2.png").toExternalForm()
+                )
+        );
+
+        fundo.setFitWidth(1280);
+        fundo.setFitHeight(720);
+        fundo.setPreserveRatio(false);
+        fundo.setMouseTransparent(true);
+
+        Rectangle overlay = new Rectangle(1280, 720);
+        overlay.setFill(Color.rgb(0, 0, 0, 0.55));
+        overlay.setMouseTransparent(true);
+
+        StackPane raiz = new StackPane(fundo, overlay, coluna);
         raiz.getStyleClass().add("fundo-menu");
 
         Scene scene = new Scene(raiz, 1280, 720);

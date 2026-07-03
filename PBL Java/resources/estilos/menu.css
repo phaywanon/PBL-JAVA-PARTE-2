@@ -2,6 +2,10 @@
     -fx-background-color: #1a1a2e;
 }
 
+/*==========================
+    TÍTULOS
+==========================*/
+
 .titulo {
     -fx-font-size: 64px;
     -fx-font-weight: bold;
@@ -10,44 +14,68 @@
 }
 
 .titulo-slots {
-    -fx-font-size: 28px;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
     -fx-text-fill: #e2b96f;
-    -fx-padding: 0 0 20 0;
+    -fx-padding: 0 0 12 0;
 }
+
+.titulo-explorar {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #e2b96f;
+    -fx-padding: 0 0 18 0;
+}
+
+/*==========================
+    BOTÕES
+==========================*/
 
 .button {
     -fx-font-size: 18px;
     -fx-min-width: 280px;
     -fx-min-height: 50px;
+
     -fx-background-color: #16213e;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: white;
+
     -fx-border-color: #e2b96f;
     -fx-border-width: 2px;
+
     -fx-cursor: hand;
 }
 
 .button:hover {
     -fx-background-color: #e2b96f;
-    -fx-text-fill: #1a1a2e;
+    -fx-text-fill: #16213e;
+}
+
+.botao-explorar {
+    -fx-min-width: 230px;
 }
 
 .botao-sair {
     -fx-font-size: 14px;
+
     -fx-min-width: 140px;
     -fx-min-height: 36px;
-    -fx-background-color: transparent;
-    -fx-text-fill: #888888;
-    -fx-border-color: #444444;
+
+    -fx-background-color: rgba(22,33,62,0.75);
+
+    -fx-text-fill: white;
+
+    -fx-border-color: #e2b96f;
     -fx-border-width: 1px;
-    -fx-margin-top: 20px;
 }
 
 .botao-sair:hover {
-    -fx-text-fill: #ffffff;
-    -fx-border-color: #ffffff;
-    -fx-background-color: transparent;
+    -fx-background-color: #e2b96f;
+    -fx-text-fill: #16213e;
 }
 
+/*==========================
+    LABELS
+==========================*/
 
 .label-campo {
     -fx-font-size: 16px;
@@ -60,15 +88,44 @@
     -fx-min-height: 20px;
 }
 
+/*==========================
+    TEXT FIELD
+==========================*/
+
 .text-field {
     -fx-font-size: 16px;
     -fx-background-color: #16213e;
-    -fx-text-fill: #ffffff;
+    -fx-text-fill: white;
+
     -fx-border-color: #e2b96f;
     -fx-border-width: 1px;
+
     -fx-padding: 8px;
 }
 
 .text-field:focused {
-    -fx-border-color: #ffffff;
+    -fx-border-color: white;
+}
+
+/*==========================
+    PAINÉIS
+==========================*/
+
+.painel-slots {
+    -fx-background-color: rgba(0,0,0,0.30);
+
+    -fx-background-radius: 16px;
+
+    -fx-border-color: #e2b96f;
+    -fx-border-width: 2px;
+    -fx-border-radius: 16px;
+
+    -fx-padding: 26px;
+
+    -fx-effect: dropshadow(gaussian,
+    rgba(0,0,0,0.7),
+    18,
+    0.2,
+    0,
+    4);
 }

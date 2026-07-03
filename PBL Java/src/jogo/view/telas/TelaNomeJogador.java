@@ -5,8 +5,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.control.TextFormatter;
 import jogo.view.SceneManager;
 
 
@@ -28,6 +34,12 @@ public class TelaNomeJogador {
         TextField campoMatricula = new TextField();
         campoMatricula.setPromptText("Ex: 20131801");
         campoMatricula.setMaxWidth(400);
+        campoMatricula.setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getControlNewText().matches("\\d*")) {
+                return change;
+            }
+            return null;
+        }));
 
         Label labelErro = new Label("");
         labelErro.getStyleClass().add("label-erro");
@@ -40,6 +52,11 @@ public class TelaNomeJogador {
         btnConfirmar.setOnAction(e -> {
             String nomeJogador = campoNome.getText().trim();
             String matriculaJogador = campoMatricula.getText().trim();
+
+            if (!nomeJogador.matches("[A-Za-zÀ-ÿ ]+")) {
+                labelErro.setText("O nome deve conter apenas letras.");
+                return;
+            }
 
             if (nomeJogador.isEmpty() || matriculaJogador.isEmpty()) {
                 labelErro.setText("Preencha todos os campos!");
@@ -64,9 +81,29 @@ public class TelaNomeJogador {
                 matricula, campoMatricula,
                 labelErro,
                 btnConfirmar, btnVoltar);
-        coluna.setAlignment(Pos.CENTER);
 
-        StackPane raiz = new StackPane(coluna);
+        coluna.setAlignment(Pos.CENTER);
+        coluna.setTranslateY(90);
+        coluna.setMaxWidth(460);
+        coluna.setMaxHeight(Region.USE_PREF_SIZE);
+        coluna.getStyleClass().add("painel-slots");
+
+        ImageView fundo = new ImageView(
+                new Image(
+                        TelaSlots.class.getResource("/imagens/TelaMenuGpt2.png").toExternalForm()
+                )
+        );
+
+        fundo.setFitWidth(1280);
+        fundo.setFitHeight(720);
+        fundo.setPreserveRatio(false);
+        fundo.setMouseTransparent(true);
+
+        Rectangle overlay = new Rectangle(1280, 720);
+        overlay.setFill(Color.rgb(0, 0, 0, 0.55));
+        overlay.setMouseTransparent(true);
+
+        StackPane raiz = new StackPane(fundo, overlay, coluna);
         raiz.getStyleClass().add("fundo-menu");
 
         Scene scene = new Scene(raiz, 1280, 720);
