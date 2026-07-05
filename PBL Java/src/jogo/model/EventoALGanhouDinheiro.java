@@ -19,6 +19,6 @@ public class EventoALGanhouDinheiro extends EventosAleatorios {
 
     @Override
     public String getMensagem() {
-        return "Você achou 20 reais no chão!";
+        return "Você achou 20 reais no chão!\n+20 Dinheiro";
     }
 }

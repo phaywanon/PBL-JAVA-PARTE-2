@@ -32,9 +32,11 @@ public class TelaNPC {
             for (NPC npc : npcs) {
                 Button btn = new Button(npc.getNome());
                 btn.setOnAction(e -> {
-                    service.interagirComNPC(npc);
+                    String mensagem = service.interagirComNPC(npc);
+
                     SceneManager.irPara("jogo");
-                    TelaJogo.atualizar();
+
+                    TelaJogo.mostrarPopupNPC(npc.getNome(), mensagem);
                 });
                 coluna.getChildren().add(btn);
             }

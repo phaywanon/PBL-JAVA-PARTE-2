@@ -16,7 +16,7 @@ public class EventoALDoente extends EventosAleatorios{
 
     @Override
     public String getMensagem() {
-        return "Você comeu algo estragado no bandejão e ficou doente...";
+        return "Você comeu algo estragado no bandejão e ficou doente.\n-20 Saúde\n-10 Energia\n-10 Motivação";
     }
 }
 

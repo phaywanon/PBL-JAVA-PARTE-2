@@ -20,8 +20,7 @@ public class EventoALMaterialCaro extends EventosAleatorios {
     }
 
     public String getMensagem() {
-        return "Uma fan do seu computador quebrou e ele está superaquecendo!\n" +
-                "Você terá que comprar outra para não ficar sem codar.";
+        return "Uma fan do seu computador quebrou e ele está superaquecendo! Você terá que comprar outra para não ficar sem codar.\n-50 Dinheiro\n-10 Energia\n-35 Motivação";
     }
 }
 

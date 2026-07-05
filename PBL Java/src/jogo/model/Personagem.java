@@ -41,8 +41,8 @@ public abstract class Personagem {
     public void setSaude(int saude) {
         if (saude < 0){
             this.saude = 0;
-        } else if (saude > 120) {
-            this.saude = 120;
+        } else if (saude > 110) {
+            this.saude = 110;
         } else {
             this.saude = saude;
         }

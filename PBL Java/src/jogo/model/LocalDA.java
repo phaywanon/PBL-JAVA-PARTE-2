@@ -3,6 +3,7 @@ package jogo.model;
 public class LocalDA extends Local{
     public LocalDA(){
         super("DA de ECOMP");
+        adicionarNPC(new PersonagemColegas());
     }
 
     @Override

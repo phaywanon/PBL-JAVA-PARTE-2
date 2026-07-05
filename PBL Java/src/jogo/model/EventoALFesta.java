@@ -20,7 +20,7 @@ public class EventoALFesta extends EventosAleatorios{
     }
 
     public String getMensagem() {
-        return "Teve uma calourada no campus e você se divertiu bastante!";
+        return "Teve uma calourada no campus e você se divertiu bastante!\n+20 Motivação\n-10 Energia";
     }
 
 }

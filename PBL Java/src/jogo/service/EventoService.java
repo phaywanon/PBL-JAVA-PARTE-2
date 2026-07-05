@@ -7,6 +7,7 @@ import java.util.Random;
 public class EventoService {
     private List<EventosAleatorios> eventos;
     private Random random = new Random();
+    private String ultimoEvento;
 
     public EventoService() {
         eventos = new ArrayList<>();
@@ -24,34 +25,44 @@ public class EventoService {
     }
 
     // Sorteia evento aleatório — retorna mensagem ou null se não sortear nada
-    public String sortearEventoAleatorio(Jogador jogador) {
+    public String getUltimoEvento() {
+        return ultimoEvento;
+    }
+
+    public boolean temEvento() {
+        return ultimoEvento != null && !ultimoEvento.isBlank();
+    }
+
+    public void limparUltimoEvento() {
+        ultimoEvento = null;
+    }
+
+    public void sortearEventoAleatorio(Jogador jogador) {
+        ultimoEvento = null;
+
         if (jogador.getLocal() instanceof LocalCasa ||
                 jogador.getLocal() instanceof LocalPontoDeOnibus) {
-            return null;
+            return;
         }
 
         if (random.nextInt(100) < 30) {
-            // filtra só os eventos permitidos no local atual
             List<EventosAleatorios> permitidos = new ArrayList<>();
+
             for (EventosAleatorios e : eventos) {
                 Class<? extends Local> localPermitido = e.getLocalPermitido();
-                if (localPermitido == null ||
-                        localPermitido.isInstance(jogador.getLocal())) {
+
+                if (localPermitido == null || localPermitido.isInstance(jogador.getLocal())) {
                     permitidos.add(e);
                 }
             }
 
-            if (permitidos.isEmpty()) return null;
+            if (permitidos.isEmpty()) return;
 
             EventosAleatorios evento = permitidos.get(random.nextInt(permitidos.size()));
             evento.aplicarEvento(jogador);
-            return "\n==================EVENTO==================\n"
-                    + evento.getDescricao()
-                    + "\n"
-                    + evento.getMensagem()
-                    + "\n";
+
+            ultimoEvento = evento.getDescricao() + "\n\n" + evento.getMensagem();
         }
-        return null;
     }
 
     // Verifica eventos obrigatórios pelo dia do semestre

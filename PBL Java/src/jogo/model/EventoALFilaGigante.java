@@ -21,7 +21,7 @@ public class EventoALFilaGigante extends EventosAleatorios{
 
     @Override
     public String getMensagem() {
-        return "A fila do bandejão estava enorme e você acabou ficando tonto de tanta fome.";
+        return "A fila do bandejão estava enorme e você acabou ficando tonto de tanta fome.\n-5 Saúde\n-10 Energia\n-15 Motivação";
     }
 
 }

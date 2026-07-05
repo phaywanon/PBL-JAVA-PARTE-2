@@ -13,7 +13,7 @@ public class EventoALPerdeuDinheiro extends EventosAleatorios {
     }
 
     public String getMensagem() {
-        return "Sua calça estava com o bolso furado e você perdeu 10 reais.";
+        return "Sua calça estava com o bolso furado e você perdeu 10 reais.\n-10 Dinheiro";
     }
 }
 

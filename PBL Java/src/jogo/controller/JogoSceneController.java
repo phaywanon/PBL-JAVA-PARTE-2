@@ -128,4 +128,18 @@ public class JogoSceneController {
     public double getDinheiro() {
         return jogoService.getJogador().getDinheiro();
     }
+
+    public boolean deveMostrarEvento() {
+        return jogoService.getEventoService().temEvento();
+    }
+
+    public String getEventoAtual() {
+        return jogoService.getEventoService().getUltimoEvento();
+    }
+
+    public void marcarEventoLido() {
+        jogoService.getEventoService().limparUltimoEvento();
+    }
+
+
 }

@@ -79,8 +79,7 @@ public class TelaExplorar {
         btn.setOnAction(e -> {
             String msg = SceneManager.getJogoService().explorar(escolha);
             SceneManager.irPara("jogo");
-            TelaJogo.log(msg);
-            TelaJogo.atualizar();
+            TelaJogo.exibirResultado(msg);
         });
         return btn;
     }

@@ -10,6 +10,6 @@ public class PersonagemColegas extends NPC{
         jogador.setMotivacao(jogador.getMotivacao() + 3);
         jogador.setEnergia(jogador.getEnergia() + 2);
         jogador.setConhecimentoSemestre(jogador.getConhecimentoSemestre() + 3);
-        return "Seus colegas te explicam um conteúdo que você estava com dúvida!";
+        return "Seus colegas te explicam um conteúdo que você estava com dúvida!\n+3 Conhecimento do Semestre";
     }
 }

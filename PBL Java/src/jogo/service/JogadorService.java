@@ -35,6 +35,7 @@ public class JogadorService{
             jogador.setDinheiro(jogador.getDinheiro() - 5);
             jogador.setEnergia(jogador.getEnergia() + 3);
             jogador.setMotivacao(jogador.getMotivacao() + 3);
+            jogador.setSaude(jogador.getSaude() + 5);
             return "Você comprou um lanche e está levemente revigorado!";
         } else {
             return "Dinheiro insuficiente!";

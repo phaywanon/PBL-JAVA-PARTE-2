@@ -11,6 +11,7 @@ import jogo.controller.JogoSceneController;
 import jogo.view.SceneManager;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.TextAlignment;
 
 public class TelaJogo {
 
@@ -147,6 +148,11 @@ public class TelaJogo {
                             "Se você não estiver lá quando a prova acontecer, vai tirar zero.");
             controller.marcarAvisoExibido();
         }
+
+        if (controller.deveMostrarEvento()) {
+            mostrarPopup("EVENTO NO CAMPUS!", controller.getEventoAtual());
+            controller.marcarEventoLido();
+        }
     }
 
     private static void atualizarBotoes() {
@@ -154,7 +160,8 @@ public class TelaJogo {
 
         for (AcaoDisponivel acao : controller.getAcoesParaLocalAtual()) {
             Button btn = botao(acao.getLabel(), () -> {
-                log(acao.executar());
+                String resultado = acao.executar();
+                exibirResultado(resultado);
                 atualizar();
             });
             painelBotoes.getChildren().add(btn);
@@ -191,25 +198,33 @@ public class TelaJogo {
         labelLog.setText(mensagem);
     }
 
+
     public static void mostrarPopup(String titulo, String mensagem) {
         painelPopup.getChildren().clear();
-        painelPopup.setStyle("-fx-background-color: rgba(0,0,0,0.75);");
+        painelPopup.setStyle("-fx-background-color: rgba(0,0,0,0.65);");
 
         Label lblTitulo = new Label(titulo);
         lblTitulo.getStyleClass().add("popup-titulo");
+        lblTitulo.setAlignment(Pos.CENTER);
+        lblTitulo.setTextAlignment(TextAlignment.CENTER);
 
         Label lblMensagem = new Label(mensagem);
         lblMensagem.getStyleClass().add("popup-mensagem");
         lblMensagem.setWrapText(true);
-        lblMensagem.setMaxWidth(600);
+        lblMensagem.setMaxWidth(400);
+        lblMensagem.setAlignment(Pos.CENTER);
+        lblMensagem.setTextAlignment(TextAlignment.CENTER);
 
-        Button btnOk = new Button("OK, entendi!");
+        Button btnOk = new Button("Continuar");
         btnOk.setOnAction(e -> painelPopup.setVisible(false));
 
-        VBox caixa = new VBox(20, lblTitulo, lblMensagem, btnOk);
+        VBox caixa = new VBox(18, lblTitulo, lblMensagem, btnOk);
         caixa.setAlignment(Pos.CENTER);
-        caixa.setMaxWidth(650);
-        caixa.setMaxHeight(350);
+
+        // largura e altura automática, de acordo com o texto
+        caixa.setMaxWidth(Region.USE_PREF_SIZE);
+        caixa.setMaxHeight(Region.USE_PREF_SIZE);
+
         caixa.getStyleClass().add("caixa-popup");
 
         painelPopup.getChildren().add(caixa);
@@ -295,5 +310,29 @@ public class TelaJogo {
                 spriteJogador.setLayoutY(280);
             }
         }
+    }
+    public static void exibirResultado(String mensagem) {
+        if (mensagem == null || mensagem.isBlank()) {
+            return;
+        }
+
+        if (mensagem.contains("EVENTO")) {
+            mostrarPopup("EVENTO NO CAMPUS!", limparMensagemEvento(mensagem));
+        } else {
+            log(mensagem);
+        }
+    }
+
+    private static String limparMensagemEvento(String mensagem) {
+        return mensagem
+                .replace("==================EVENTO==================", "")
+                .trim();
+    }
+
+    public static void mostrarPopupNPC(String nomeNPC, String mensagem) {
+        mostrarPopup(
+                "👤 " + nomeNPC,
+                mensagem
+        );
     }
 }

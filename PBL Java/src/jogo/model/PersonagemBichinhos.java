@@ -9,6 +9,6 @@ public class PersonagemBichinhos extends NPC {
     public String interagir(Jogador jogador) {
         jogador.setMotivacao(jogador.getMotivacao() + 5);
         jogador.setEnergia(jogador.getEnergia() - 1);
-        return "Você fez carinho num bichinho do campus e se sentiu mais animado! 🐱";
+        return "Você fez carinho num bichinho do campus e se sentiu mais animado! 🐱\n+5 Motivação\n-1 Energia";
     }
 }

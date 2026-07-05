@@ -17,7 +17,6 @@ public class EventoALGreve extends EventosAleatorios {
     }
 
     public String getMensagem() {
-        return "Os estudantes resolveram fechar o pórtico por conta dos preços abusivos dos ônibus em Feira de Santana.\n" +
-                "Apoie a causa!";
+        return "Os estudantes resolveram fechar o pórtico por conta dos preços abusivos dos ônibus em Feira de Santana. Apoie a causa!\n+10 Energia \n-10 Motivação \n-5 Desempenho Acadêmico \n -10 Conhecimento do Semesntre \n-1 Nível de Conhecimento";
     }
 }

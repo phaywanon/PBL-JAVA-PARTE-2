@@ -54,14 +54,11 @@ public class JogoService {
             default -> { return "Opção inválida!"; }
         }
 
-        String msg = "";
         String descricaoLocal = jogador.getLocal().eventoAoEntrar(jogador);
-        msg += descricaoLocal + "\n";
 
-        String evento = eventoService.sortearEventoAleatorio(jogador);
-        if (evento != null) msg += evento;
+        eventoService.sortearEventoAleatorio(jogador);
 
-        return msg;
+        return descricaoLocal;
     }
 
     // Avanço de dia — tudo que o controller fazia em avancarDia()
